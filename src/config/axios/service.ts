@@ -22,7 +22,7 @@ let axiosCreateParmater = {
 }
 if (uni.getSystemInfoSync().uniPlatform != 'web') {
   axiosCreateParmater.baseURL = base_url
-}else{
+} else {
   axiosCreateParmater.baseURL = '/useProxy'
 }
 const service: AxiosInstance = axios.create(axiosCreateParmater)
@@ -87,7 +87,7 @@ service.interceptors.response.use(
       // 返回“[HTTP]请求没有返回值”;
       throw new Error()
     }
-    const { t } = useI18n()
+    // const { t } = useI18n()
     // 未设置状态码则默认成功状态
     const code = data.code || result_code
     // 二进制数据则直接返回
@@ -99,10 +99,7 @@ service.interceptors.response.use(
     }
     // 获取错误信息
     const msg = data.msg || errorCode[code] || errorCode['default']
-    if (ignoreMsgs.indexOf(msg) !== -1) {
-      // 如果是忽略的错误码，直接返回 msg 异常
-      return Promise.reject(msg)
-    } else if (code === 401) {
+    if (code === 401) {
       // 如果未认证，并且未进行刷新令牌，说明可能是访问令牌过期了
       if (!isRefreshToken) {
         isRefreshToken = true

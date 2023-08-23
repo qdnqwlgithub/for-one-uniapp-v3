@@ -1,23 +1,31 @@
 <template>
-  <view class="indec-container">
-    <!-- <u-swiper
-            :list="list1"
-            @change="change"
-            @click="click"
-    ></u-swiper> -->
-  </view>
-
-  <u-loading-page :loading="loading" loading-text="会一欢迎你"></u-loading-page>
+  <div class="index-container">
+    <u-swiper
+      indicator
+      keyName="image"
+      circular
+      class="index-swiper"
+      :list="bannerStore.bannerList"
+      height="850rpx"
+    ></u-swiper>
+    <UnionSection />
+    <SpaceSection />
+  </div>
 </template>
 
 <script setup lang="ts">
+import UnionSection from './union-section.vue'
+import SpaceSection from './space-section.vue'
 import { useBannerStore } from '@/store/banner'
 const bannerStore = useBannerStore()
 import { ref, onBeforeMount } from 'vue'
-let loading = ref(true)
+// let loading = ref(true)
 onBeforeMount(() => {
   bannerStore.initBannerListByStore()
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.index-container {
+}
+</style>
