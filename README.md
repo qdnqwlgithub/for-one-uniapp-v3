@@ -27,6 +27,8 @@ https://uiadmin.net/uview-plus/components/picker.html
 # todo
 
 - array用ref还是rective？
+- 页面生命周期钩子函数review
+- loadding动画的review
 
 # code template
 

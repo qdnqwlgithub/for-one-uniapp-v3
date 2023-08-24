@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Relatives from './relatives.vue'
 import Material from './material.vue'
 import Title from './title.vue'
 import { onLoad } from '@dcloudio/uni-app'
@@ -30,6 +31,7 @@ onLoad(() => {
       <Title :title="item.title" />
       <Info :info-array="item.features" />
       <Material :support="item.support" />
+      <Relatives :relatives="item.relatives" />
     </MidLayout>
   </view>
 </template>
