@@ -11,3 +11,6 @@ export const getCaseListOfIndex = () =>
 
 export const getUnionListOfIndex = () =>
   request.get({ url: '/api/onlyforone/businessPartner/index' })
+
+export const getCategoryList = () =>
+  request.get({ url: '/api/onlyforone/routes/index' })

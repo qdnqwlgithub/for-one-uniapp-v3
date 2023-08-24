@@ -29,6 +29,7 @@ https://uiadmin.net/uview-plus/components/picker.html
 - array用ref还是rective？
 - 页面生命周期钩子函数review
 - loadding动画的review
+- sometime, chrome会报异常或者错误
 
 # code template
 

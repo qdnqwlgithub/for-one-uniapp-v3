@@ -8,12 +8,14 @@
       :list="bannerStore.bannerList"
       height="850rpx"
     ></u-swiper>
+    <CategorySection />
     <UnionSection />
     <SpaceSection />
   </div>
 </template>
 
 <script setup lang="ts">
+import CategorySection from './category-section.vue'
 import UnionSection from './union-section.vue'
 import SpaceSection from './space-section.vue'
 import { useBannerStore } from '@/store/banner'

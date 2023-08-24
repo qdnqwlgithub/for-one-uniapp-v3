@@ -16,6 +16,12 @@
       }
     },
     {
+      "path": "pages/example/index",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
+    },
+    {
       "path": "pages/detail/index",
       "style": {
         "navigationBarTitleText": "uni-app"

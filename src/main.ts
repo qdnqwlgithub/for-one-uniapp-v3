@@ -6,12 +6,14 @@ import Layout from '@/layout/index.vue'
 import 'virtual:svg-icons-register'
 import MidIcon from '@/components/mid-icon'
 import MidButton from '@/components/mid-button'
+import ImageFont from '@/components/image-font'
 
 export function createApp() {
   const app = createSSRApp(App)
   app.component('MidLayout', Layout)
   app.component('MidIcon', MidIcon)
   app.component('MidButton', MidButton)
+  app.component('ImageFont', ImageFont)
   app.use(uviewPlus)
   uni.$u.config.unit = 'rpx'
   app.use(Pinia.createPinia())

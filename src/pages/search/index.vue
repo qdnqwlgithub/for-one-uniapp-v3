@@ -1,29 +1,5 @@
-<template>
-  <view class="search-container">
-    <view class="input-container">
-      <u-search
-        height="70rpx"
-        :showAction="false"
-        :clearabled="true"
-        placeholder="请输入产品名称/型号"
-        v-model="queryWrapper.keyword"
-      ></u-search>
-    </view>
-    <view class="mid-row">
-      <C2Scroll class="c2-scroll" :c2List="c2List" :c2Id="queryWrapper.c2Id" />
-      <view class="right">
-        <C3Scroll
-          class="c3-scroll"
-          :c3List="c3List"
-          :c3Id="queryWrapper.c3Id"
-        />
-        <ItemContainer :itemList="goodList" />
-      </view>
-    </view>
-  </view>
-</template>
-
 <script setup lang="ts">
+let loading = ref(true)
 import C2Scroll from './c2-scroll'
 import C3Scroll from './c3-scroll'
 import ItemContainer from './item-container'
@@ -33,7 +9,7 @@ import {
   getC3ListByC1IdAndC2Id,
   pageGood
 } from '../../api/search'
-import { ref, reactive } from 'vue'
+import { ref, reactive, nextTick } from 'vue'
 let queryWrapper = reactive({
   c1Id: undefined,
   c2Id: undefined,
@@ -66,9 +42,13 @@ const initC2List = () => {
       return Promise.resolve
     })
     .then(() => {
-      pageGood(queryWrapper).then((r) => {
-        goodList.value = r.items
-        totalPage.value = r.pageInfo.totalPage
+      return pageGood(queryWrapper)
+    })
+    .then((r) => {
+      goodList.value = r.items
+      totalPage.value = r.pageInfo.totalPage
+      nextTick(() => {
+        loading.value = false
       })
     })
 }
@@ -84,6 +64,32 @@ const handleC2IdFromChildren = (c2Id) => {
   queryWrapper.c2Id = c2Id
 }
 </script>
+
+<template>
+  <view class="search-container">
+    <view class="input-container">
+      <u-search
+        height="70rpx"
+        :showAction="false"
+        :clearabled="true"
+        placeholder="请输入产品名称/型号"
+        v-model="queryWrapper.keyword"
+      ></u-search>
+    </view>
+    <view class="mid-row">
+      <C2Scroll class="c2-scroll" :c2List="c2List" :c2Id="queryWrapper.c2Id" />
+      <view class="right">
+        <C3Scroll
+          class="c3-scroll"
+          :c3List="c3List"
+          :c3Id="queryWrapper.c3Id"
+        />
+        <ItemContainer :itemList="goodList" />
+      </view>
+    </view>
+  </view>
+  <u-loading-page :loading="loading"></u-loading-page>
+</template>
 
 <style lang="scss" scoped>
 // $container-height: cala(100vh - )

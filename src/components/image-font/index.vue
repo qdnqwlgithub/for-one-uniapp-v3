@@ -1,17 +1,21 @@
 <script setup lang="ts">
 defineProps({
-  item: {
-    type: Object
+  imagePath: {
+    type: String
   }
 })
 </script>
 
 <template>
   <view class="item-container">
-    <up-image :src="item.image" width="100%" height="400rpx"></up-image>
+    <up-image :src="imagePath" width="100%" height="400rpx"></up-image>
     <view class="info">
-      <view class="left">{{ item.title }}</view>
-      <view class="collect">xx</view>
+      <view class="left">
+        <slot name="left"></slot>
+      </view>
+      <view class="right">
+        <slot name="right"></slot>
+      </view>
     </view>
   </view>
 </template>

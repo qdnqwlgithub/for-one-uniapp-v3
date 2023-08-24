@@ -5,7 +5,15 @@
       mid-text="专店加盟"
       right-text="更多"
     ></IndexTitle>
-    <div class="item" v-for="union in unionList" :key="union.id">
+    <ImageFont
+      class="mid-image-font"
+      :image-path="union.image"
+      v-for="union in unionList"
+      :key="union.id"
+    >
+      <template #left>{{ union.title }}</template>
+    </ImageFont>
+    <!-- <div class="item" v-for="union in unionList" :key="union.id">
       <up-image
         mode="scaleToFill"
         :src="union.image"
@@ -17,7 +25,7 @@
         <span style="margin: 0 12rpx">|</span>
         <span>{{ union.space }}</span>
       </div>
-    </div>
+    </div> -->
   </MidLayout>
 </template>
 
@@ -35,17 +43,20 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss" scoped>
-.item {
-  position: relative;
-  margin-bottom: 20rpx;
-  > .mid-title {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.5);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    color: white;
-    padding: 20rpx 30rpx;
-  }
+// .item {
+//   position: relative;
+//   margin-bottom: 20rpx;
+//   > .mid-title {
+//     position: absolute;
+//     background-color: rgba(0, 0, 0, 0.5);
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     color: white;
+//     padding: 20rpx 30rpx;
+//   }
+// }
+.mid-image-font {
+  margin-bottom: 15rpx;
 }
 </style>
