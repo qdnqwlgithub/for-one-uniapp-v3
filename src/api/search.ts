@@ -16,3 +16,24 @@ export const getC3ListByC1IdAndC2Id = (c1Id, c2Id) =>
       y_category_id: c2Id
     }
   })
+
+export const pageGood = (queryWrapper) => {
+  let realQeryWrapper = {}
+  realQeryWrapper.usage_category_id = queryWrapper.c1Id
+  if (queryWrapper.c2Id) {
+    realQeryWrapper.y_category_id = queryWrapper.c2Id
+  }
+  if (queryWrapper.c2Id) {
+    realQeryWrapper.x_category_id = queryWrapper.c3Id
+  }
+  if (queryWrapper.pageSize) {
+    realQeryWrapper.page_size = queryWrapper.pageSize
+  }
+  if (queryWrapper.pageNumber) {
+    realQeryWrapper.page = queryWrapper.pageNumber
+  }
+  return request.get({
+    url: `/g_data/api/sale/goodsMainCategoryCombo/getForoneGoods`,
+    params: realQeryWrapper
+  })
+}

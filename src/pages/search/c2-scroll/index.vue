@@ -23,6 +23,7 @@ $theSizeOfFont: 26rpx;
   height: 100%;
   width: 100%;
   background-color: $mini-gray;
+  overflow: hidden;
   .item {
     padding: 16rpx;
     font-size: $theSizeOfFont;

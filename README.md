@@ -1,3 +1,17 @@
+# 获取页面参数
+
+```
+// vue2(before)
+onLoad(options)...
+
+// vue3(now)
+const props = defineProps({
+  id: String,
+  usageCategoryId: String
+})
+
+```
+
 # format these code
 
 ```
