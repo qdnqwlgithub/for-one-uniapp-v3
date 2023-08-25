@@ -5,7 +5,7 @@
       :class="{ active: c3Id == item.id }"
       v-for="item in c3List"
       :key="item.id"
-      @tap="$emit('emitC3Id', item.id)"
+      @tap="$emit('do', item.id)"
     >
       {{ item.name }}
     </view>

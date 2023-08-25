@@ -7,7 +7,12 @@ defineProps(['itemList'])
 <template>
   <scroll-view scroll-y="true" class="scroll-Y">
     <view class="container">
-      <Item class="item" v-for="item in itemList" :item="item"></Item>
+      <Item
+        :key="item.id"
+        class="item"
+        v-for="item in itemList"
+        :item="item"
+      ></Item>
     </view>
   </scroll-view>
 </template>

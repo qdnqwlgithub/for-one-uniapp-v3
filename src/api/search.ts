@@ -37,3 +37,19 @@ export const pageGood = (queryWrapper) => {
     params: realQeryWrapper
   })
 }
+
+export const collectGood = (goodId) =>
+  request.post({
+    url: `/api/onlyforone/collection/add`,
+    params: {
+      good_id: goodId
+    }
+  })
+
+export const cancelCollectGood = (goodId) =>
+  request.delete({
+    url: `/api/onlyforone/collection/delete/${goodId}`,
+    params: {
+      good_id: goodId
+    }
+  })

@@ -32,6 +32,12 @@
       "style": {
         "navigationBarTitleText": "uni-app"
       }
+    },
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
     }
   ],
   "globalStyle": {

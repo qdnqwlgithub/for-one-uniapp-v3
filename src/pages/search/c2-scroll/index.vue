@@ -1,10 +1,10 @@
 <template>
   <scroll-view croll-y="true" scroll-y="true" class="scroll-Y">
     <div
-      @tap="$emit('emitC2Id', item.id)"
+      @tap="$emit('do', item.id)"
       :class="{ active: c2Id == item.id }"
       v-for="item in c2List"
-      :key="item"
+      :key="item.id"
       class="item"
     >
       {{ item.name }}

@@ -1,3 +1,9 @@
+# 防抖和节流
+
+```
+https://www.bilibili.com/video/BV1HP4y1174b/?spm_id_from=333.337.search-card.all.click&vd_source=215de1e77e8db71d1aa6a68e7c48b7aa
+```
+
 # 获取页面参数
 
 ```
@@ -30,6 +36,14 @@ https://uiadmin.net/uview-plus/components/picker.html
 - 页面生命周期钩子函数review
 - loadding动画的review
 - sometime, chrome会报异常或者错误
+- search.page 动画应该分为全屏过度、部分过渡，一直全屏过度好像很卡的样子，虽然后台真的卡
+- 部分代码待优化，全局搜索todo逐个解决
+- 更多花色布局space-between不生效
+- search.page input
+- example dropdown
+- sticky
+- empty内容为空
+- color in uView in component
 
 # code template
 

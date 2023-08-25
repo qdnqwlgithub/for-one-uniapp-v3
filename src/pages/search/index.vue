@@ -24,32 +24,20 @@ let goodList = ref([])
 let totalPage = ref(0)
 onLoad((options) => {
   queryWrapper.c1Id = '墙板'
-  initC2List()
+  init()
 })
-const handleC2Tap= (c2Id)=>>{
-  if(loading.value){
-    return;
-  }
-  loading.value=true;
-  queryWrapper.c2Id=c2Id
-  initC3List()
-}
-const initC2List = () => {
+const init = () => {
+  loading.value = true
   getC2ListByC1Id(queryWrapper.c1Id)
     .then((r) => {
-      c2List.value = r
-      if (c2List.value && c2List.value[0]) {
-        queryWrapper.c2Id = c2List.value[0].id
+      c2List = r
+      if (c2List.length > 0) {
+        queryWrapper.c2Id = c2List[0].id
       }
-      return Promise.resolve
+      return getC3ListByC1IdAndC2Id(queryWrapper.c1Id, queryWrapper.c2Id)
     })
-    .then(() => {
-      if (queryWrapper.c2Id) {
-        initC3List()
-      }
-      return Promise.resolve
-    })
-    .then(() => {
+    .then((r) => {
+      c3List.value = r
       return pageGood(queryWrapper)
     })
     .then((r) => {
@@ -62,16 +50,46 @@ const initC2List = () => {
       })
     })
 }
-const handleC3IdFromChildren = (c3Id) => {
-  queryWrapper.c3Id = c3Id
-}
-const initC3List = () => {
-  getC3ListByC1IdAndC2Id(queryWrapper.c1Id, queryWrapper.c2Id).then((r) => {
-    c3List.value = r
+
+const handleC2Tap = async (c2Id) => {
+  if (loading.value) {
+    return
+  }
+  loading.value = true
+  // 一些初始化的操作
+  c3List.value = []
+  goodList.value = []
+  totalPage.value = 0
+  queryWrapper.c2Id = c2Id
+  queryWrapper.c3Id = undefined
+  queryWrapper.pageNumber = 1
+  c3List.value = await getC3ListByC1IdAndC2Id(
+    queryWrapper.c1Id,
+    queryWrapper.c2Id
+  )
+  let { pageInfo, items } = await pageGood(queryWrapper)
+  goodList.value = items
+  totalPage.value = pageInfo.totalPage
+  nextTick(() => {
+    loading.value = false
   })
 }
-const handleC2IdFromChildren = (c2Id) => {
-  queryWrapper.c2Id = c2Id
+
+const handleC3Tap = async (c3Id) => {
+  if (loading.value) {
+    return
+  }
+  loading.value = true
+  goodList.value = []
+  totalPage.value = 0
+  queryWrapper.c3Id = c3Id
+  queryWrapper.pageNumber = 1
+  let { pageInfo, items } = await pageGood(queryWrapper)
+  goodList.value = items
+  totalPage.value = pageInfo.totalPage
+  nextTick(() => {
+    loading.value = false
+  })
 }
 </script>
 
@@ -87,12 +105,18 @@ const handleC2IdFromChildren = (c2Id) => {
       ></u-search>
     </view>
     <view class="mid-row">
-      <C2Scroll class="c2-scroll" :c2List="c2List" :c2Id="queryWrapper.c2Id" />
+      <C2Scroll
+        class="c2-scroll"
+        :c2List="c2List"
+        :c2Id="queryWrapper.c2Id"
+        @do="handleC2Tap"
+      />
       <view class="right">
         <C3Scroll
           class="c3-scroll"
           :c3List="c3List"
           :c3Id="queryWrapper.c3Id"
+          @do="handleC3Tap"
         />
         <ItemContainer :itemList="goodList" />
       </view>
