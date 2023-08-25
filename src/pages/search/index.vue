@@ -26,6 +26,14 @@ onLoad((options) => {
   queryWrapper.c1Id = '墙板'
   initC2List()
 })
+const handleC2Tap= (c2Id)=>>{
+  if(loading.value){
+    return;
+  }
+  loading.value=true;
+  queryWrapper.c2Id=c2Id
+  initC3List()
+}
 const initC2List = () => {
   getC2ListByC1Id(queryWrapper.c1Id)
     .then((r) => {
@@ -47,6 +55,8 @@ const initC2List = () => {
     .then((r) => {
       goodList.value = r.items
       totalPage.value = r.pageInfo.totalPage
+    })
+    .finally(() => {
       nextTick(() => {
         loading.value = false
       })
