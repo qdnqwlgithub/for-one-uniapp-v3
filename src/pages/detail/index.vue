@@ -24,6 +24,7 @@ onLoad(() => {
 </script>
 
 <template>
+  <ForOneHeader :enable-back="true" />
   <u-loading-page :loading="loading"></u-loading-page>
   <view v-if="item">
     <up-image :src="item.image" width="750rpx" height="750rpx"></up-image>
@@ -31,7 +32,12 @@ onLoad(() => {
       <Title :title="item.title" />
       <Info :info-array="item.features" />
       <Material :support="item.support" />
-      <Relatives :relatives="item.relatives" />
+      <Relatives
+        icon-name="more"
+        en="RELATIVES"
+        :zh="item.relatives.title"
+        :relatives="item.relatives.items"
+      />
     </MidLayout>
   </view>
 </template>

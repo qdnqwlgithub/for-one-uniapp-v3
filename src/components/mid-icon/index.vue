@@ -6,9 +6,10 @@ const props = defineProps({
     default: '#icon-'
   },
   name: String,
+  // sometime work, sometime not work
   color: {
     type: String,
-    default: ''
+    default: 'green'
   },
   width: {
     type: String,

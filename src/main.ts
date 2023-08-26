@@ -7,6 +7,8 @@ import 'virtual:svg-icons-register'
 import MidIcon from '@/components/mid-icon'
 import MidButton from '@/components/mid-button'
 import ImageFont from '@/components/image-font'
+import ForOneHeader from '@/components/for-one-header'
+import MidShareButton from '@/components/mid-share-button'
 
 export function createApp() {
   const app = createSSRApp(App)
@@ -14,6 +16,8 @@ export function createApp() {
   app.component('MidIcon', MidIcon)
   app.component('MidButton', MidButton)
   app.component('ImageFont', ImageFont)
+  app.component('ForOneHeader', ForOneHeader)
+  app.component('MidShareButton', MidShareButton)
   app.use(uviewPlus)
   uni.$u.config.unit = 'rpx'
   app.use(Pinia.createPinia())

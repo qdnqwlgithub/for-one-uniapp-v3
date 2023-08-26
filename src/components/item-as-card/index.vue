@@ -43,7 +43,7 @@ const handleTapCollect = _.debounce((item) => {
 
 <template>
   <view class="item-container" @tap="goToDetailPage(item)">
-    <up-image :src="item.image" width="260rpx" height="260rpx"></up-image>
+    <up-image :src="item.image" width="100%" mode="widthFix	"></up-image>
     <view class="info">
       <view class="left">
         <view class="name">名称：{{ item.name }}</view>
@@ -54,7 +54,7 @@ const handleTapCollect = _.debounce((item) => {
           @tap.native.stop="handleTapCollect(item)"
           :width="iconFontSize"
           :height="iconFontSize"
-          :name="item.is_collected ? 'star1' : 'star0'"
+          :name="item.is_collected ? 'star1' : 'star0-fill'"
         />
       </view>
     </view>
@@ -62,10 +62,10 @@ const handleTapCollect = _.debounce((item) => {
 </template>
 
 <style scoped lang="scss">
-$global-width: 120rpx;
+$global-width: 280rpx;
 .item-container {
   margin-top: 20rpx;
-  width: 260rpx;
+  width: $global-width;
   border-radius: 15rpx;
   overflow: hidden;
 }

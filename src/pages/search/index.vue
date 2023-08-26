@@ -94,6 +94,7 @@ const handleC3Tap = async (c3Id) => {
 </script>
 
 <template>
+  <ForOneHeader :enable-back="true" />
   <view class="search-container">
     <view class="input-container">
       <u-search

@@ -23,11 +23,19 @@ const doPageQuery = () => {
 onLoad(() => {
   doPageQuery()
 })
+
+const goToExampleDetailPage = (item) => {
+  uni.navigateTo({
+    url: `/pages/example/detail?id=${item.id}`
+  })
+}
 </script>
 
 <template>
+  <ForOneHeader />
   <MidLayout>
     <Item
+      @tap="goToExampleDetailPage(item)"
       class="item"
       v-for="item in exampleList"
       :key="item.id"
@@ -38,6 +46,6 @@ onLoad(() => {
 
 <style scoped lang="scss">
 .item {
-  margin-bottom: 20rpx;
+  margin-bottom: 15rpx;
 }
 </style>

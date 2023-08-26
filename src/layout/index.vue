@@ -1,6 +1,8 @@
 <template>
   <div class="layout-container">
-    <slot></slot>
+    <view class="content">
+      <slot></slot>
+    </view>
   </div>
 </template>
 
@@ -8,7 +10,10 @@
 
 <style lang="scss" scoped>
 .layout-container {
-  width: 700rpx;
-  margin: auto;
+  background-color: white;
+  .content {
+    width: 700rpx;
+    margin: auto;
+  }
 }
 </style>

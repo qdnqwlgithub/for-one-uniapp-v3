@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Item from './item.vue'
+import Item from '@/components/item-as-card/index.vue'
 import { defineProps } from 'vue'
 defineProps(['itemList'])
 </script>

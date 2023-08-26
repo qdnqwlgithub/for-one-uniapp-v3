@@ -19,3 +19,8 @@ export const pageExample = (queryWrapper) => {
     params: realQeryWrapper
   })
 }
+
+export const getExampleById = (id) =>
+  request.get({
+    url: `/api/onlyforone/cases/detail/${id}`
+  })

@@ -1,4 +1,5 @@
 <template>
+  <ForOneHeader />
   <div class="index-container">
     <u-swiper
       indicator

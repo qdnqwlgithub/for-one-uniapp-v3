@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import Section from './section.vue'
+import Section from '@/components/Section/index.vue'
+
 import { defineProps } from 'vue'
 defineProps({
   support: {

@@ -44,6 +44,7 @@ https://uiadmin.net/uview-plus/components/picker.html
 - sticky
 - empty内容为空
 - color in uView in component
+- image click detail
 
 # code template
 

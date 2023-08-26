@@ -7,10 +7,10 @@ defineProps({
 
 <template>
   <view class="detail-title-container">
-    <view class="title locale-height">{{ title }}</view>
-    <view class="menu locale-height">
-      <MidButton text="分享" />
-      <MidButton text="收藏" />
+    <view class="title">{{ title }}</view>
+    <view class="menu">
+      <MidShareButton />
+      <MidButton icon-color="red" text="收藏" name="star0" />
     </view>
   </view>
 </template>
@@ -19,13 +19,15 @@ defineProps({
 .detail-title-container {
   display: flex;
   align-items: center;
+  height: 110rpx;
   .title {
-    flex: 60%;
+    flex: 80%;
     font-size: 32rpx;
   }
   .menu {
-    flex: 40%;
+    flex: 20%;
     display: flex;
+    justify-content: space-around;
   }
 }
 </style>

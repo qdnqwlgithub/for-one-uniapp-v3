@@ -23,6 +23,9 @@
     },
     {
       "path": "pages/mine/index"
+    },
+    {
+      "path": "pages/example/detail"
     }
   ],
   "globalStyle": {
