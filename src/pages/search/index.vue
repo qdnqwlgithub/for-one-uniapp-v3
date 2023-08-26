@@ -2,7 +2,7 @@
 let loading = ref(true)
 import C2Scroll from './c2-scroll'
 import C3Scroll from './c3-scroll'
-import ItemContainer from './item-container'
+import ItemsContainer from './items-container'
 import { onLoad } from '@dcloudio/uni-app'
 import {
   getC2ListByC1Id,
@@ -94,43 +94,52 @@ const handleC3Tap = async (c3Id) => {
 </script>
 
 <template>
-  <ForOneHeader :enable-back="true" />
-  <view class="search-container">
-    <view class="input-container">
-      <u-search
-        height="70rpx"
-        :showAction="false"
-        :clearabled="true"
-        placeholder="请输入产品名称/型号"
-        v-model="queryWrapper.keyword"
-      ></u-search>
-    </view>
-    <view class="mid-row">
-      <C2Scroll
-        class="c2-scroll"
-        :c2List="c2List"
-        :c2Id="queryWrapper.c2Id"
-        @do="handleC2Tap"
-      />
-      <view class="right">
-        <C3Scroll
-          class="c3-scroll"
-          :c3List="c3List"
-          :c3Id="queryWrapper.c3Id"
-          @do="handleC3Tap"
+  <view class="flex-container">
+    <ForOneHeader :enable-back="true" />
+    <view class="search-container">
+      <view class="input-container">
+        <u-search
+          height="70rpx"
+          :showAction="false"
+          :clearabled="true"
+          placeholder="请输入产品名称/型号"
+          v-model="queryWrapper.keyword"
+        ></u-search>
+      </view>
+      <view class="mid-row">
+        <C2Scroll
+          class="c2-scroll"
+          :c2List="c2List"
+          :c2Id="queryWrapper.c2Id"
+          @do="handleC2Tap"
         />
-        <ItemContainer :itemList="goodList" />
+        <view class="right">
+          <C3Scroll
+            class="c3-scroll"
+            :c3List="c3List"
+            :c3Id="queryWrapper.c3Id"
+            @do="handleC3Tap"
+          />
+          <ItemsContainer class="items-container" :itemList="goodList" />
+        </view>
       </view>
     </view>
+    <u-loading-page :loading="loading"></u-loading-page>
   </view>
-  <u-loading-page :loading="loading"></u-loading-page>
 </template>
 
 <style lang="scss" scoped>
+.flex-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 // $container-height: cala(100vh - )
 
 .search-container {
-  height: 100vh;
+  flex: 1;
+  overflow: hidden;
+  // height: 100vh;
   display: flex;
   flex-direction: column;
   .input-container {
@@ -149,6 +158,12 @@ const handleC3Tap = async (c3Id) => {
     .right {
       flex: 1;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      .items-container {
+        flex: 1;
+        overflow: hidden;
+      }
     }
   }
 }

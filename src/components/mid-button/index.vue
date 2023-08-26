@@ -8,7 +8,7 @@ let props = defineProps({
     type: String,
     default: 'mi'
   },
-  iconColor:{
+  iconColor: {
     type: String
   }
 })
@@ -18,7 +18,12 @@ let iconSize = ref('40rpx')
 <template>
   <view class="button-container">
     <view class="content">
-      <MidIcon :width="iconSize" :height="iconSize" :name="name" :color="iconColor" />
+      <MidIcon
+        :width="iconSize"
+        :height="iconSize"
+        :name="name"
+        :color="iconColor"
+      />
       <view class="text">{{ props.text }}</view>
     </view>
   </view>
