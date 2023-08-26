@@ -1,16 +1,22 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
-defineProps({
-  title: String
+import { defineProps, defineEmits } from 'vue'
+let props = defineProps({
+  item: Object
 })
+let emits = defineEmits('doCollect')
 </script>
 
 <template>
   <view class="detail-title-container">
-    <view class="title">{{ title }}</view>
+    <view class="title">{{ props.item.title }}</view>
     <view class="menu">
-      <MidShareButton />
-      <MidButton icon-color="red" text="收藏" name="star0" />
+      <MidShareButton :item="item" />
+      <MidButton
+        @tap="emits('doCollect', item.id)"
+        icon-color="red"
+        text="收藏"
+        :name="props.item.good.is_collected ? 'star0' : 'star1'"
+      />
     </view>
   </view>
 </template>

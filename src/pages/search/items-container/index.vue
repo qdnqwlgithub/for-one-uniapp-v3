@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import Item from '@/components/item-as-card/index.vue'
-import { defineProps } from 'vue'
-defineProps(['itemList'])
+import { defineProps, defineEmits } from 'vue'
+let props = defineProps(['itemList', 'status'])
+let emits = defineEmits(['onLower'])
+const onLower = () => {
+  emits('onLower')
+}
 </script>
 
 <template>
-  <scroll-view scroll-y="true" class="scroll-Y">
+  <scroll-view scroll-y="true" class="scroll-Y" @scrolltolower="onLower">
     <view class="container">
       <Item
         :key="item.id"
@@ -14,6 +18,7 @@ defineProps(['itemList'])
         :item="item"
       ></Item>
     </view>
+    <u-loadmore :status="props.status" />
   </scroll-view>
 </template>
 

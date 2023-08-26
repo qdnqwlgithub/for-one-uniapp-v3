@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { collectGood, cancelCollectGood } from '@/api/search'
+import * as _ from 'lodash'
 import Relatives from './relatives.vue'
 import Material from './material.vue'
 import Title from './title.vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { ref, reactive, defineProps } from 'vue'
+import { ref, reactive, defineProps, nextTick } from 'vue'
 import { getGoodsDetailByIdAndUsageCategoryId } from '@/api/detail'
 let item = reactive(undefined)
 import Info from './info.vue'
@@ -21,6 +23,19 @@ onLoad(() => {
     }
   )
 })
+
+const handleDoCollectFromChild = _.debounce((item) => {
+  // todo 代优化
+  if (item.is_collected) {
+    cancelCollectGood(item.id).then((r) => {
+      item.is_collected = false
+    })
+  } else {
+    collectGood(item.id).then((r) => {
+      item.is_collected = true
+    })
+  }
+}, 500)
 </script>
 
 <template>
@@ -29,7 +44,7 @@ onLoad(() => {
   <view v-if="item">
     <up-image :src="item.image" width="750rpx" height="750rpx"></up-image>
     <MidLayout>
-      <Title :title="item.title" />
+      <Title :item="item" @do-collect="handleDoCollectFromChild(item.good)" />
       <Info :info-array="item.features" />
       <Material :support="item.support" />
       <Relatives

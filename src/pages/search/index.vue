@@ -91,6 +91,30 @@ const handleC3Tap = async (c3Id) => {
     loading.value = false
   })
 }
+
+let status = ref('loadmore')
+
+const handleOnLower = async () => {
+  if (status.value == 'nomore' || queryWrapper.pageNumber >= totalPage) {
+    return
+  }
+  if (loading.value) {
+    return
+  }
+  loading.value = true
+  queryWrapper.pageNumber++
+  let { pageInfo, items } = await pageGood(queryWrapper)
+  goodList.value = goodList.value.concat(items)
+  totalPage.value = pageInfo.totalPage
+  if (queryWrapper.pageNumber >= totalPage.value) {
+    console.log(queryWrapper.pageNumber)
+    console.log(totalPage.value)
+    status.value = 'nomore'
+  }
+  nextTick(() => {
+    loading.value = false
+  })
+}
 </script>
 
 <template>
@@ -120,7 +144,12 @@ const handleC3Tap = async (c3Id) => {
             :c3Id="queryWrapper.c3Id"
             @do="handleC3Tap"
           />
-          <ItemsContainer class="items-container" :itemList="goodList" />
+          <ItemsContainer
+            :status="status"
+            @on-lower="handleOnLower"
+            class="items-container"
+            :itemList="goodList"
+          />
         </view>
       </view>
     </view>
