@@ -24,3 +24,11 @@ export const getExampleById = (id) =>
   request.get({
     url: `/api/onlyforone/cases/detail/${id}`
   })
+
+export const switchStatus = (exampleId, status) =>
+  request.post({
+    url: `/api/onlyforone/caseCollection/status/${exampleId}`,
+    params: {
+      status
+    }
+  })

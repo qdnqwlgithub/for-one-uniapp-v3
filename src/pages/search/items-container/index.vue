@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Item from '@/components/item-as-card/index.vue'
 import { defineProps, defineEmits } from 'vue'
 let props = defineProps(['itemList', 'status'])
 let emits = defineEmits(['onLower'])
@@ -11,12 +10,12 @@ const onLower = () => {
 <template>
   <scroll-view scroll-y="true" class="scroll-Y" @scrolltolower="onLower">
     <view class="container">
-      <Item
+      <ItemAsCard
         :key="item.id"
         class="item"
         v-for="item in itemList"
-        :item="item"
-      ></Item>
+        :image="item.image"
+      ></ItemAsCard>
     </view>
     <u-loadmore :status="props.status" />
   </scroll-view>

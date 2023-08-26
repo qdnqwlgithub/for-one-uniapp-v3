@@ -9,6 +9,7 @@ import MidButton from '@/components/mid-button'
 import ImageFont from '@/components/image-font'
 import ForOneHeader from '@/components/for-one-header'
 import MidShareButton from '@/components/mid-share-button'
+import ItemAsCard from '@/components/item-as-card'
 
 export function createApp() {
   const app = createSSRApp(App)
@@ -18,6 +19,7 @@ export function createApp() {
   app.component('ImageFont', ImageFont)
   app.component('ForOneHeader', ForOneHeader)
   app.component('MidShareButton', MidShareButton)
+  app.component('ItemAsCard', ItemAsCard)
   app.use(uviewPlus)
   uni.$u.config.unit = 'rpx'
   app.use(Pinia.createPinia())

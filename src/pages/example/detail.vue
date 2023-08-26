@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import * as _ from 'lodash'
 import Gallery from './gallery.vue'
 import { ref, defineProps, nextTick } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { getExampleById } from '@/api/example.ts'
+import { getExampleById, switchStatus } from '@/api/example.ts'
 import Title from '@/pages/detail/title.vue'
 import Info from '@/pages/detail/info.vue'
 import Relatives from '@/pages/detail/relatives.vue'
@@ -23,6 +24,19 @@ onLoad(() => {
       })
     })
 })
+
+const handleDoCollectFromChild = _.debounce((item) => {
+  // todo 代优化
+  if (item.is_collected) {
+    switchStatus(item.id, 0).then((r) => {
+      item.is_collected = false
+    })
+  } else {
+    switchStatus(item.id, 1).then((r) => {
+      item.is_collected = true
+    })
+  }
+}, 500)
 </script>
 
 <template>
@@ -30,7 +44,11 @@ onLoad(() => {
   <view class="detail-container" v-if="item">
     <up-image :src="item.image" width="750rpx" height="400rpx"></up-image>
     <MidLayout>
-      <Title class="item" :title="item.title" />
+      <Title
+        @doCollect="handleDoCollectFromChild(item)"
+        class="item"
+        :item="item"
+      />
     </MidLayout>
     <MidLayout class="info-layout">
       <Info class="info" :infoArray="[{ label: '风格', value: item.style }]" />

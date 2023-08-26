@@ -3,13 +3,23 @@ import { collectGood, cancelCollectGood } from '@/api/search'
 import * as _ from 'lodash'
 import { nextTick, ref } from 'vue'
 import { defineProps } from 'vue'
-defineProps(['item'])
+let props = defineProps({
+  image: {
+    type: String
+  },
+  kvList: {
+    type: Array
+  },
+  isCollect:{
+    type :Boolean
+  }
+})
 const goToDetailPage = (item) => {
   uni.navigateTo({
     url: `/pages/detail/index?id=${item.id}&usageCategoryId=${item.usage_category_id}`
   })
 }
-let iconFontSize = ref('36rpx')
+let iconFontSize = ref('40rpx')
 let loadding = ref([])
 const handleTapCollect = _.debounce((item) => {
   if (loadding[item.id]) {
@@ -43,18 +53,24 @@ const handleTapCollect = _.debounce((item) => {
 
 <template>
   <view class="item-container" @tap="goToDetailPage(item)">
-    <up-image :src="item.image" width="100%" mode="widthFix	"></up-image>
+    <up-image :src="props.image" width="100%" mode="widthFix"></up-image>
     <view class="info">
       <view class="left">
-        <view class="name">名称：{{ item.name }}</view>
-        <view class="code">型号：{{ item.code }}</view>
+        <view class="kvItem" v-for="item in kvList">
+          <view class="k">{{}}</view>
+          <view class="v"></view>
+          {{props.image}}
+          {{props}}
+        </view>
+<!--        <view class="name">名称：{{ item.name }}</view>-->
+<!--        <view class="code">型号：{{ item.code }}</view>-->
       </view>
       <view class="right">
         <MidIcon
           @tap.native.stop="handleTapCollect(item)"
           :width="iconFontSize"
           :height="iconFontSize"
-          :name="item.is_collected ? 'star1' : 'star0-fill'"
+          :name="isCollect ? 'star1' : 'star0-fill'"
         />
       </view>
     </view>
@@ -62,10 +78,11 @@ const handleTapCollect = _.debounce((item) => {
 </template>
 
 <style scoped lang="scss">
-$global-width: 280rpx;
+//$global-width: 280rpx;
 .item-container {
   margin-top: 20rpx;
-  width: $global-width;
+  //width: $global-width;
+  width: 100%;
   border-radius: 15rpx;
   overflow: hidden;
 }

@@ -15,7 +15,15 @@ let emits = defineEmits('doCollect')
         @tap="emits('doCollect', item.id)"
         icon-color="red"
         text="收藏"
-        :name="props.item.good.is_collected ? 'star0' : 'star1'"
+        :name="
+          item.good
+            ? props.item.good.is_collected
+              ? 'star0'
+              : 'star1'
+            : props.item.is_collected
+            ? 'star0'
+            : 'star1'
+        "
       />
     </view>
   </view>

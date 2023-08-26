@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Item from './item.vue'
+// import Item from './item.vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { pageExample } from '../../api/example'
 import { ref, reactive } from 'vue'
@@ -34,13 +34,12 @@ const goToExampleDetailPage = (item) => {
 <template>
   <ForOneHeader />
   <MidLayout>
-    <Item
-      @tap="goToExampleDetailPage(item)"
-      class="item"
+    <ItemAsCard
+      :image="item.image"
+      :isCollect="item.is_collect"
       v-for="item in exampleList"
       :key="item.id"
-      :item="item"
-    ></Item>
+    />
   </MidLayout>
 </template>
 
