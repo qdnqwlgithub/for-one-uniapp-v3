@@ -9,6 +9,7 @@ import MidButton from '@/components/mid-button'
 import ImageFont from '@/components/image-font'
 import ForOneHeader from '@/components/for-one-header'
 import MidShareButton from '@/components/mid-share-button'
+import ExampleDropDown from '@/components/example-drop-down'
 import ItemAsCard from '@/components/item-as-card'
 
 export function createApp() {
@@ -20,6 +21,7 @@ export function createApp() {
   app.component('ForOneHeader', ForOneHeader)
   app.component('MidShareButton', MidShareButton)
   app.component('ItemAsCard', ItemAsCard)
+  app.component('ExampleDropDown', ExampleDropDown)
   app.use(uviewPlus)
   uni.$u.config.unit = 'rpx'
   app.use(Pinia.createPinia())

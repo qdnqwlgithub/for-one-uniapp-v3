@@ -1,6 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
+  <ForOneHeader />
   <u-cell-group>
     <u-cell title="产品收藏" arrow-direction="down">
       <template #icon>

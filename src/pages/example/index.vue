@@ -29,22 +29,39 @@ const goToExampleDetailPage = (item) => {
     url: `/pages/example/detail?id=${item.id}`
   })
 }
+
+const createItemKvListByItem = (item) => {
+  let kvList = []
+  kvList.push(item.title)
+  return kvList
+}
+
+let show=ref(false)
 </script>
 
 <template>
   <ForOneHeader />
+  <ExampleDropDown/>
   <MidLayout>
     <ItemAsCard
+      class="item"
+      @tap="goToExampleDetailPage(item)"
       :image="item.image"
+      :kvList="createItemKvListByItem(item)"
       :isCollect="item.is_collect"
       v-for="item in exampleList"
       :key="item.id"
     />
   </MidLayout>
+  <u-popup :show="show">
+    <view>
+      <text>出淤泥而不染，濯清涟而不妖</text>
+    </view>
+  </u-popup>
 </template>
 
 <style scoped lang="scss">
 .item {
-  margin-bottom: 15rpx;
+  margin-top: 20rpx;
 }
 </style>

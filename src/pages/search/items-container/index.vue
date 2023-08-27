@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, ref } from 'vue'
 let props = defineProps(['itemList', 'status'])
 let emits = defineEmits(['onLower'])
 const onLower = () => {
   emits('onLower')
+}
+const createItemKvListByItem = (item) => {
+  let kvList = []
+  kvList.push(`名称：${item.name}`)
+  kvList.push(`型号：${item.code}`)
+  return kvList
 }
 </script>
 
@@ -15,6 +21,7 @@ const onLower = () => {
         class="item"
         v-for="item in itemList"
         :image="item.image"
+        :kv-list="createItemKvListByItem(item)"
       ></ItemAsCard>
     </view>
     <u-loadmore :status="props.status" />
@@ -29,8 +36,10 @@ const onLower = () => {
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: center;
-    justify-items: center;
+    //align-items: center;
+    //justify-items: center;
+    row-gap: 20rpx;
+    column-gap: 20rpx;
   }
 }
 </style>

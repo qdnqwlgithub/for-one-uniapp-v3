@@ -10,15 +10,10 @@ let props = defineProps({
   kvList: {
     type: Array
   },
-  isCollect:{
-    type :Boolean
+  isCollect: {
+    type: Boolean
   }
 })
-const goToDetailPage = (item) => {
-  uni.navigateTo({
-    url: `/pages/detail/index?id=${item.id}&usageCategoryId=${item.usage_category_id}`
-  })
-}
 let iconFontSize = ref('40rpx')
 let loadding = ref([])
 const handleTapCollect = _.debounce((item) => {
@@ -52,18 +47,13 @@ const handleTapCollect = _.debounce((item) => {
 </script>
 
 <template>
-  <view class="item-container" @tap="goToDetailPage(item)">
+  <view class="item-container">
     <up-image :src="props.image" width="100%" mode="widthFix"></up-image>
     <view class="info">
       <view class="left">
-        <view class="kvItem" v-for="item in kvList">
-          <view class="k">{{}}</view>
-          <view class="v"></view>
-          {{props.image}}
-          {{props}}
+        <view class="kvItem" v-for="kvItem in props.kvList">
+          {{ kvItem }}
         </view>
-<!--        <view class="name">名称：{{ item.name }}</view>-->
-<!--        <view class="code">型号：{{ item.code }}</view>-->
       </view>
       <view class="right">
         <MidIcon
@@ -78,10 +68,8 @@ const handleTapCollect = _.debounce((item) => {
 </template>
 
 <style scoped lang="scss">
-//$global-width: 280rpx;
 .item-container {
-  margin-top: 20rpx;
-  //width: $global-width;
+  //margin-top: 20rpx;
   width: 100%;
   border-radius: 15rpx;
   overflow: hidden;
@@ -94,16 +82,12 @@ const handleTapCollect = _.debounce((item) => {
   box-sizing: border-box;
   padding: 14rpx;
   .left {
-    width: 170rpx;
-    .name,
-    .code {
+    width: 80%;
+    .kvItem {
       zoom: 85%;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-    }
-    .name {
-      margin-bottom: 10rpx;
     }
   }
   .right {

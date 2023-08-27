@@ -2,6 +2,17 @@
 
 WebStorm是全世界最好的前端开发工具之一
 
+# common queryWarapper
+
+```shell
+let queryWrapper=reactive({
+  pageSize: 5,
+  pageNumber: 1,
+  // other parameter
+})
+let totalPage=ref(0)
+```
+
 # 防抖和节流
 
 ```
@@ -49,6 +60,7 @@ https://uiadmin.net/uview-plus/components/picker.html
 - empty内容为空
 - color in uView in component
 - image click detail
+- v-model原理
 
 # code template
 
