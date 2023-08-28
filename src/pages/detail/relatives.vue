@@ -16,13 +16,19 @@ let props = defineProps({
     type: String
   }
 })
-let imageSize = ref('320rpx')
+
+const createItemKvListByItem = (item) => {
+  let kvList = []
+  kvList.push(`名称：${item.name}`)
+  kvList.push(`型号：${item.code}`)
+  return kvList
+}
 </script>
 
 <template>
   <Section :icon-name="iconName" :zh="zh" :en="en">
     <view class="content">
-      <ItemAsCard v-for="item in relatives" :item="item" />
+      <ItemAsCard :image="item.image" :kv-list="createItemKvListByItem(item)" v-for="item in relatives" :item="item" />
     </view>
   </Section>
 </template>

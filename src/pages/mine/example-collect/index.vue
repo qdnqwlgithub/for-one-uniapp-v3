@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import RealIndex from './real-index/index.vue'
+import RealIndex from '@/pages/example/real-index/index.vue'
 </script>
 
 <template>
-  <ForOneHeader />
+  <ForOneHeader :enable-back="true" />
   <RealIndex />
 </template>
 

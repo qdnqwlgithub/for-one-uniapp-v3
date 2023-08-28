@@ -48,7 +48,7 @@ const handleTapCollect = _.debounce((item) => {
 
 <template>
   <view class="item-container">
-    <up-image :src="props.image" width="100%" mode="widthFix"></up-image>
+    <up-image class="mid-img" :src="props.image" width="100%" height="100%" mode="widthFix"></up-image>
     <view class="info">
       <view class="left">
         <view class="kvItem" v-for="kvItem in props.kvList">
@@ -68,6 +68,9 @@ const handleTapCollect = _.debounce((item) => {
 </template>
 
 <style scoped lang="scss">
+.mid-img{
+  aspect-ratio: 1/1;
+}
 .item-container {
   //margin-top: 20rpx;
   width: 100%;

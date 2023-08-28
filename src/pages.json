@@ -26,6 +26,12 @@
     },
     {
       "path": "pages/example/detail"
+    },
+    {
+      "path": "pages/mine/example-collect/index"
+    },
+    {
+      "path": "pages/mine/product-collect/index"
     }
   ],
   "globalStyle": {

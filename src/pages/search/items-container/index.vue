@@ -11,12 +11,18 @@ const createItemKvListByItem = (item) => {
   kvList.push(`型号：${item.code}`)
   return kvList
 }
+const goToProductDetailPage=(item)=>{
+  uni.navigateTo({
+    url: `/pages/detail/index?id=${item.id}&usageCategoryId=${item.usage_category_id}`
+  })
+}
 </script>
 
 <template>
   <scroll-view scroll-y="true" class="scroll-Y" @scrolltolower="onLower">
     <view class="container">
       <ItemAsCard
+        @tap="goToProductDetailPage(item)"
         :key="item.id"
         class="item"
         v-for="item in itemList"

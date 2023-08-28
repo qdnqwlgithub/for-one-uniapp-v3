@@ -11,6 +11,7 @@ let queryWrapper=reactive({
   // other parameter
 })
 let totalPage=ref(0)
+let dataList=ref([])
 ```
 
 # 防抖和节流
@@ -61,6 +62,8 @@ https://uiadmin.net/uview-plus/components/picker.html
 - color in uView in component
 - image click detail
 - v-model原理
+- the code of response校验
+- the r of foroneheader
 
 # code template
 
