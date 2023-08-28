@@ -4,7 +4,7 @@ let props = defineProps({
   itemList: Array
 })
 
-const goToProductDetailPage=(item)=>{
+const goToProductDetailPage = (item) => {
   uni.navigateTo({
     url: `/pages/detail/index?id=${item.id}&usageCategoryId=${item.usage_category_id}`
   })

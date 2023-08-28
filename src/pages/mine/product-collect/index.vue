@@ -13,31 +13,34 @@ let goodList = ref([])
 onLoad(() => {
   runPageCollectGood()
 })
-const runPageCollectGood=()=>{
+const runPageCollectGood = () => {
   queryWrapper.pageNumber++
-  pageCollectGood(queryWrapper).then((r) => {
-    let {items,pageInfo}= r;
-    goodList.value = goodList.value.concat(items.map(item=>item['good_info']))
-    totalPage.value=pageInfo.totalPage
-  }).catch(()=>{
-    queryWrapper.pageNumber--
-  }).finally(()=>{
-
-  })
+  pageCollectGood(queryWrapper)
+    .then((r) => {
+      let { items, pageInfo } = r
+      goodList.value = goodList.value.concat(
+        items.map((item) => item['good_info'])
+      )
+      totalPage.value = pageInfo.totalPage
+    })
+    .catch(() => {
+      queryWrapper.pageNumber--
+    })
+    .finally(() => {})
 }
 </script>
 
 <template>
   <view class="product-collect-container">
-  <ForOneHeader :enable-back="true" />
-  <view class="content">
-  <ItemsContainer
-    :status="status"
-    @on-lower="runPageCollectGood"
-    class="items-container"
-    :itemList="goodList"
-  />
-  </view>
+    <ForOneHeader :enable-back="true" />
+    <view class="content">
+      <ItemsContainer
+        :status="status"
+        @on-lower="runPageCollectGood"
+        class="items-container"
+        :itemList="goodList"
+      />
+    </view>
   </view>
 </template>
 
@@ -47,7 +50,7 @@ const runPageCollectGood=()=>{
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  .content{
+  .content {
     flex: 1;
     overflow: hidden;
   }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Section from '@/components/Section/index.vue'
-import ItemContent from "@/pages/search/items-container/item-content.vue";
+import ItemContent from '@/pages/search/items-container/item-content.vue'
 import { defineProps, ref } from 'vue'
 import ItemAsCard from '@/components/item-as-card/index.vue'
 let props = defineProps({
@@ -28,7 +28,7 @@ const createItemKvListByItem = (item) => {
 
 <template>
   <Section :icon-name="iconName" :zh="zh" :en="en">
-    <ItemContent :item-list="relatives"/>
+    <ItemContent :item-list="relatives" />
   </Section>
 </template>
 

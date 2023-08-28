@@ -5,7 +5,7 @@ let emits = defineEmits(['onLower'])
 const onLower = () => {
   emits('onLower')
 }
-import ItemContent from "@/pages/search/items-container/item-content.vue";
+import ItemContent from '@/pages/search/items-container/item-content.vue'
 </script>
 
 <template>
@@ -19,7 +19,5 @@ import ItemContent from "@/pages/search/items-container/item-content.vue";
 .scroll-Y {
   width: 100%;
   height: 100%;
-
-
 }
 </style>

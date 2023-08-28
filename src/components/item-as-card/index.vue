@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { ItemAsCardType } from "@/types/enums";
 import { collectGood, cancelCollectGood } from '@/api/search'
+import {switchStatus} from '@/api/example'
 import * as _ from 'lodash'
-import { nextTick, ref,defineEmits,defineProps } from 'vue'
-let emits=defineEmits(['update:isCollect'])
+import { nextTick, ref, defineEmits, defineProps,computed } from 'vue'
+let emits = defineEmits(['update:isCollect'],['update:status'])
+// let realIsCollect=computed(()=>props.origin=='product'?props.isCollect:Boolean(props.status) )
 let props = defineProps({
   image: {
     type: String
@@ -15,36 +18,48 @@ let props = defineProps({
   },
   id: {
     type: String
+  },
+  origin: {
+    type: Number as ()=> ItemAsCardType,
+    default: ItemAsCardType.PRODUCT
+  },
+  status: {
+    type: Number
   }
 })
 let iconFontSize = ref('40rpx')
 let loadding = ref([])
-const handleTapCollect = _.debounce((id) => {
+const handleTapCollectByProduct = _.debounce((id) => {
   if (props.isCollect) {
-    cancelCollectGood(id)
-      .then((r) => {
-        emits('update:isCollect',false)
-      })
-      .finally(() => {
-        nextTick(() => {
-        })
-      })
+    cancelCollectGood(id).then(() => {
+      emits('update:isCollect', true)
+    })
   } else {
-    collectGood(id)
-      .then((r) => {
-        emits('update:isCollect',true)
-      })
-      .finally(() => {
-        nextTick(() => {
-        })
-      })
+    collectGood(id).then(() => {
+      emits('update:isCollect', true)
+    })
   }
+}, 500)
+
+const handleTapCollectByExample = _.debounce((id) => {
+  switchStatus(id,(Number)!((Boolean)props.status)).then(()=>{
+    // emits('update:status',(Number)!(Boolean)status)
+  })
 }, 500)
 </script>
 
 <template>
   <view class="item-container">
-    <up-image class="mid-img" :src="props.image" width="100%" height="100%" mode="widthFix"></up-image>
+    <up-image
+      :class="{
+        'product-img': props.origin === ItemAsCardType.PRODUCT,
+        'example-img': props.origin == ItemAsCardType.EXAMPLE
+      }"
+      :src="props.image"
+      width="100%"
+      height="100%"
+      mode="widthFix"
+    ></up-image>
     <view class="info">
       <view class="left">
         <view class="kvItem" v-for="kvItem in props.kvList">
@@ -53,10 +68,14 @@ const handleTapCollect = _.debounce((id) => {
       </view>
       <view class="right">
         <MidIcon
-          @tap.native.stop="handleTapCollect(props.id)"
+          @tap.native.stop="
+            props.origin === ItemAsCardType.EXAMPLE
+              ? handleTapCollectByExample(props)
+              : handleTapCollectByProduct(props.id)
+          "
           :width="iconFontSize"
           :height="iconFontSize"
-          :name="isCollect ? 'star1' : 'star0-fill'"
+          :name="props.isCollect ? 'star1' : 'star0-fill'"
         />
       </view>
     </view>
@@ -64,8 +83,11 @@ const handleTapCollect = _.debounce((id) => {
 </template>
 
 <style scoped lang="scss">
-.mid-img{
+.product-img {
   aspect-ratio: 1/1;
+}
+.example-img {
+  aspect-ratio: 16/9;
 }
 .item-container {
   //margin-top: 20rpx;

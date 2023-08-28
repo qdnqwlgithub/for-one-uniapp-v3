@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ItemAsCardType } from '@/types/enums'
 import { onLoad } from '@dcloudio/uni-app'
 import { pageExample } from '@/api/example'
 import { ref, reactive } from 'vue'
@@ -42,6 +43,8 @@ let show = ref(false)
   <ExampleDropDown />
   <MidLayout>
     <ItemAsCard
+      :origin="ItemAsCardType.EXAMPLE"
+      origin="example"
       class="item"
       @tap="goToExampleDetailPage(item)"
       :image="item.image"
