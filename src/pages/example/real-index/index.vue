@@ -43,8 +43,8 @@ let show = ref(false)
   <ExampleDropDown />
   <MidLayout>
     <ItemAsCard
+      :id="item.id"
       :origin="ItemAsCardType.EXAMPLE"
-      origin="example"
       class="item"
       @tap="goToExampleDetailPage(item)"
       :image="item.image"

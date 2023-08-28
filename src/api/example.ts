@@ -25,10 +25,11 @@ export const getExampleById = (id) =>
     url: `/api/onlyforone/cases/detail/${id}`
   })
 
-export const switchStatus = (exampleId, status) =>
-  request.post({
+export const switchStatus = (exampleId, status) =>{
+  return request.post({
     url: `/api/onlyforone/caseCollection/status/${exampleId}`,
     params: {
-      status
+      status: status
     }
   })
+}

@@ -30,6 +30,7 @@ const service: AxiosInstance = axios.create(axiosCreateParmater)
 // request拦截器
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    debugger
     ;(config as Recordable).headers.Authorization =
       'Bearer ' +
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmb3JvbmVfNjRlMzE4NjliMmIwOTcuMjEyNzU0MzIiLCJpYXQiOjE2OTI2MDQ1MjEuNzMxOTIsIm5iZiI6MTY5MjYwNDUyMS43MzE5MiwiZXhwIjoxNjkyNjExNzIxLjczMTkyLCJhcHBfY29kZSI6ImZvcm9uZSIsImlkIjoyLCJqd3Rfc2NlbmUiOiJmb3JvbmUifQ.GM1hGLxrI0x4nvh2bhZs012s-909sVcAfiw4ULXE4jQ'

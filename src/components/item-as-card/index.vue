@@ -42,8 +42,8 @@ const handleTapCollectByProduct = _.debounce((id) => {
 }, 500)
 
 const handleTapCollectByExample = _.debounce((id) => {
-  switchStatus(id,(Number)!((Boolean)props.status)).then(()=>{
-    // emits('update:status',(Number)!(Boolean)status)
+  switchStatus(id,Number(!Boolean(props.status))).then(()=>{
+    emits('update:status',Number(!Boolean(props.status)))
   })
 }, 500)
 </script>
@@ -70,7 +70,7 @@ const handleTapCollectByExample = _.debounce((id) => {
         <MidIcon
           @tap.native.stop="
             props.origin === ItemAsCardType.EXAMPLE
-              ? handleTapCollectByExample(props)
+              ? handleTapCollectByExample(props.id)
               : handleTapCollectByProduct(props.id)
           "
           :width="iconFontSize"
