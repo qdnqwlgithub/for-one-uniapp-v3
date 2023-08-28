@@ -21,6 +21,8 @@ const createItemKvListByItem = (item) => {
   <view class="container">
     <ItemAsCard
       @tap="goToProductDetailPage(item)"
+      v-model:isCollect="item.is_collected"
+      :id="item.id"
       :key="item.id"
       class="item"
       v-for="item in props.itemList"

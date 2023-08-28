@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { collectGood, cancelCollectGood } from '@/api/search'
 import * as _ from 'lodash'
-import { nextTick, ref } from 'vue'
-import { defineProps } from 'vue'
+import { nextTick, ref,defineEmits,defineProps } from 'vue'
+let emits=defineEmits(['update:isCollect'])
 let props = defineProps({
   image: {
     type: String
@@ -12,34 +12,30 @@ let props = defineProps({
   },
   isCollect: {
     type: Boolean
+  },
+  id: {
+    type: String
   }
 })
 let iconFontSize = ref('40rpx')
 let loadding = ref([])
-const handleTapCollect = _.debounce((item) => {
-  if (loadding[item.id]) {
-    return
-  }
-  loadding[item.id] = true
-  // todo 代优化
-  if (item.is_collected) {
-    cancelCollectGood(item.id)
+const handleTapCollect = _.debounce((id) => {
+  if (props.isCollect) {
+    cancelCollectGood(id)
       .then((r) => {
-        item.is_collected = false
+        emits('update:isCollect',false)
       })
       .finally(() => {
         nextTick(() => {
-          delete loadding[item.id]
         })
       })
   } else {
-    collectGood(item.id)
+    collectGood(id)
       .then((r) => {
-        item.is_collected = true
+        emits('update:isCollect',true)
       })
       .finally(() => {
         nextTick(() => {
-          delete loadding[item.id]
         })
       })
   }
@@ -57,7 +53,7 @@ const handleTapCollect = _.debounce((item) => {
       </view>
       <view class="right">
         <MidIcon
-          @tap.native.stop="handleTapCollect(item)"
+          @tap.native.stop="handleTapCollect(props.id)"
           :width="iconFontSize"
           :height="iconFontSize"
           :name="isCollect ? 'star1' : 'star0-fill'"
