@@ -49,7 +49,8 @@ let show = ref(false)
       @tap="goToExampleDetailPage(item)"
       :image="item.image"
       :kvList="createItemKvListByItem(item)"
-      :isCollect="item.is_collect"
+      v-model:isCollect="item.is_collect"
+      v-model:isCollected="item.is_collected"
       v-for="item in exampleList"
       :key="item.id"
     />

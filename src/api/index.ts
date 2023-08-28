@@ -1,16 +1,13 @@
 /**
  * index页面的一些api
  */
-import request from '@/config/axios'
+const http = uni.$u.http
 
-export const getBannerList = () =>
-  request.get({ url: '/api/onlyforone/banner/index' })
+export const getBannerList = () => http.get('/api/onlyforone/banner/index')
 
-export const getCaseListOfIndex = () =>
-  request.get({ url: '/api/onlyforone/cases/index' })
+export const getCaseListOfIndex = () => http.get('/api/onlyforone/cases/index')
 
 export const getUnionListOfIndex = () =>
-  request.get({ url: '/api/onlyforone/businessPartner/index' })
+  http.get('/api/onlyforone/businessPartner/index')
 
-export const getCategoryList = () =>
-  request.get({ url: '/api/onlyforone/routes/index' })
+export const getCategoryList = () => http.get('/api/onlyforone/routes/index')

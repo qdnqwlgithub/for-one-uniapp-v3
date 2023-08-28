@@ -1,13 +1,12 @@
 /**
  * detail页面的一些api
  */
-import request from '@/config/axios'
+const http = uni.$u.http
 
-export const getGoodsDetailByIdAndUsageCategoryId = (id, usage_category_id) =>
-  request.get({
-    url: '/g_data/api/sale/goodsMainCategoryCombo/detail',
+export const getGoodsDetailByIdAndUsageCategoryId = (id, usageCategoryOd) =>
+  http.get('/g_data/api/sale/goodsMainCategoryCombo/detail', {
     params: {
-      usage_category_id,
+      usage_category_id: usageCategoryOd,
       id
     }
   })

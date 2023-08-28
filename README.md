@@ -2,7 +2,9 @@
 
 WebStorm是全世界最好的前端开发工具之一
 
-# common queryWarapper
+# uView plus
+
+# common queryWrapper
 
 ```shell
 let queryWrapper=reactive({

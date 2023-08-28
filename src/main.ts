@@ -2,6 +2,12 @@ import { createSSRApp } from 'vue'
 import * as Pinia from 'pinia'
 import App from './App.vue'
 import uviewPlus from 'uview-plus'
+import requestConfig from '@/config/request/index'
+uni.$u.http.setConfig((config) => {
+  /* config 为默认全局配置*/
+  config.baseURL = requestConfig.baseUrl /* 根域名 */
+  return config
+})
 import Layout from '@/layout/index.vue'
 import 'virtual:svg-icons-register'
 import MidIcon from '@/components/mid-icon'
@@ -11,9 +17,11 @@ import ForOneHeader from '@/components/for-one-header'
 import MidShareButton from '@/components/mid-share-button'
 import ExampleDropDown from '@/components/example-drop-down'
 import ItemAsCard from '@/components/item-as-card'
+import { initRequest } from '@/utils/request/index'
 
 export function createApp() {
   const app = createSSRApp(App)
+  initRequest(app)
   app.component('MidLayout', Layout)
   app.component('MidIcon', MidIcon)
   app.component('MidButton', MidButton)

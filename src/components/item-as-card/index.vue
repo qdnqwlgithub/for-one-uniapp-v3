@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ItemAsCardType } from "@/types/enums";
+import { ItemAsCardType } from '@/types/enums'
 import { collectGood, cancelCollectGood } from '@/api/search'
-import {switchStatus} from '@/api/example'
+import { switchStatus } from '@/api/example'
 import * as _ from 'lodash'
-import { nextTick, ref, defineEmits, defineProps,computed } from 'vue'
-let emits = defineEmits(['update:isCollect'],['update:status'])
+import { nextTick, ref, defineEmits, defineProps, computed } from 'vue'
+let emits = defineEmits(['update:isCollect','update:status'])
 // let realIsCollect=computed(()=>props.origin=='product'?props.isCollect:Boolean(props.status) )
 let props = defineProps({
   image: {
@@ -16,11 +16,14 @@ let props = defineProps({
   isCollect: {
     type: Boolean
   },
+  isCollected:{
+    type: Boolean
+  },
   id: {
     type: String
   },
   origin: {
-    type: Number as ()=> ItemAsCardType,
+    type: Number as () => ItemAsCardType,
     default: ItemAsCardType.PRODUCT
   },
   status: {
@@ -42,8 +45,8 @@ const handleTapCollectByProduct = _.debounce((id) => {
 }, 500)
 
 const handleTapCollectByExample = _.debounce((id) => {
-  switchStatus(id,Number(!Boolean(props.status))).then(()=>{
-    emits('update:status',Number(!Boolean(props.status)))
+  switchStatus(id, Number(!Boolean(props.status))).then(() => {
+    emits('update:status', Number(!Boolean(props.status)))
   })
 }, 500)
 </script>
@@ -75,7 +78,7 @@ const handleTapCollectByExample = _.debounce((id) => {
           "
           :width="iconFontSize"
           :height="iconFontSize"
-          :name="props.isCollect ? 'star1' : 'star0-fill'"
+          :name="props.origin===ItemAsCardType.EXAMPLE?(props.isCollected ? 'star1' : 'star0-fill'):(props.isCollect ? 'star1' : 'star0-fill')"
         />
       </view>
     </view>

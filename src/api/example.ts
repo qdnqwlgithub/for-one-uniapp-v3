@@ -1,7 +1,7 @@
 /**
  * example页面的一些api
  */
-import request from '@/config/axios'
+const http = uni.$u.http
 
 // 为什么不用get？
 export const pageExample = (queryWrapper) => {
@@ -14,22 +14,15 @@ export const pageExample = (queryWrapper) => {
   if (queryWrapper.pageNumber) {
     realQeryWrapper.page = queryWrapper.pageNumber
   }
-  return request.post({
-    url: '/api/onlyforone/cases/list',
-    params: realQeryWrapper
-  })
+  return http.post('/api/onlyforone/cases/list',realQeryWrapper)
 }
 
 export const getExampleById = (id) =>
-  request.get({
-    url: `/api/onlyforone/cases/detail/${id}`
-  })
+  http.get(`/api/onlyforone/cases/detail/${id}`)
 
-export const switchStatus = (exampleId, status) =>{
-  return request.post({
-    url: `/api/onlyforone/caseCollection/status/${exampleId}`,
-    params: {
-      status: status
-    }
+export const switchStatus = (exampleId, status) => {
+
+  return http.post(`/api/onlyforone/caseCollection/status/${exampleId}`, {
+    status: status
   })
 }
