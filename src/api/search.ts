@@ -4,7 +4,9 @@
 const http = uni.$u.http
 
 export const getC2ListByC1Id = (c1Id) =>
-  http.get(`/g_data/api/sale/good_usage_category/getForoneYCategoryByUsageId?usage_category_id=${c1Id}`)
+  http.get(
+    `/g_data/api/sale/good_usage_category/getForoneYCategoryByUsageId?usage_category_id=${c1Id}`
+  )
 
 export const getC3ListByC1IdAndC2Id = (c1Id, c2Id) =>
   http.get(`/g_data/api/sale/good_usage_category/getForoneXCategoryByUsageId`, {

@@ -10,17 +10,19 @@ const requestInterceptors = (vm) => {
     (config) => {
       // 可使用async await 做异步操作
       // 初始化请求拦截器时，会执行此方法，此时data为undefined，赋予默认{}
+
       config.data = config.data || {}
       // 演示custom 用处
-      if(config.custom.auth==null||config.custom.auth==undefined){
-        config.custom.auth=true
+      if (config.custom.auth == null || config.custom.auth == undefined) {
+        config.custom.auth = true
       }
       if (config.custom.auth) {
-        config.header.Authorization = 'Bearer ' +
+        config.header.Authorization =
+          'Bearer ' +
           'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmb3JvbmVfNjRlMzE4NjliMmIwOTcuMjEyNzU0MzIiLCJpYXQiOjE2OTI2MDQ1MjEuNzMxOTIsIm5iZiI6MTY5MjYwNDUyMS43MzE5MiwiZXhwIjoxNjkyNjExNzIxLjczMTkyLCJhcHBfY29kZSI6ImZvcm9uZSIsImlkIjoyLCJqd3Rfc2NlbmUiOiJmb3JvbmUifQ.GM1hGLxrI0x4nvh2bhZs012s-909sVcAfiw4ULXE4jQ'
       }
       if (config.custom.loading) {
-       uni.showLoading()
+        uni.showLoading()
       }
       // if (!token) { // 如果token不存在，return Promise.reject(config) 会取消本次请求
       // 	return Promise.reject(config)

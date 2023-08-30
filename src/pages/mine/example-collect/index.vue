@@ -4,7 +4,7 @@ import RealIndex from '@/pages/example/real-index/index.vue'
 
 <template>
   <ForOneHeader :enable-back="true" />
-  <RealIndex />
+  <RealIndex status="1" />
 </template>
 
 <style scoped lang="scss"></style>

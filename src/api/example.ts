@@ -1,3 +1,5 @@
+import { pageCollectExample } from '@/api/mine'
+
 /**
  * example页面的一些api
  */
@@ -14,15 +16,14 @@ export const pageExample = (queryWrapper) => {
   if (queryWrapper.pageNumber) {
     realQeryWrapper.page = queryWrapper.pageNumber
   }
-  return http.post('/api/onlyforone/cases/list',realQeryWrapper)
+  return http.post('/api/onlyforone/cases/list', realQeryWrapper)
 }
 
 export const getExampleById = (id) =>
   http.get(`/api/onlyforone/cases/detail/${id}`)
 
 export const switchStatus = (exampleId, status) => {
-
   return http.post(`/api/onlyforone/caseCollection/status/${exampleId}`, {
-    status: status
+    status
   })
 }

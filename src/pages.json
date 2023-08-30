@@ -32,6 +32,9 @@
     },
     {
       "path": "pages/mine/product-collect/index"
+    },
+    {
+      "path": "pages/test/index"
     }
   ],
   "globalStyle": {

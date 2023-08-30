@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ItemAsCardType } from '@/types/enums'
 import { onLoad } from '@dcloudio/uni-app'
+import { pageCollectExample } from '@/api/mine'
 import { pageExample } from '@/api/example'
-import { ref, reactive } from 'vue'
+import { ref, reactive, defineProps } from 'vue'
+let props = defineProps({
+  status: {
+    type: Number,
+    default: 0
+  }
+})
 let exampleList = ref([])
 let queryWrapper = reactive({
   pageNumber: 1,
@@ -15,10 +22,17 @@ let totalPage = ref(0)
 let styleCategoryList = ref([])
 let spaceCategoryList = ref([])
 const doPageQuery = () => {
-  pageExample(queryWrapper).then((r) => {
-    exampleList.value = r.items
-    totalPage.value = r.pageInfo.page
-  })
+  if (props.status == 0) {
+    pageExample(queryWrapper).then((r) => {
+      exampleList.value = r.items
+      totalPage.value = r.pageInfo.page
+    })
+  } else {
+    pageCollectExample(queryWrapper).then((r) => {
+      exampleList.value = r.items
+      totalPage.value = r.pageInfo.page
+    })
+  }
 }
 onLoad(() => {
   doPageQuery()
@@ -40,7 +54,8 @@ let show = ref(false)
 </script>
 
 <template>
-  <ExampleDropDown />
+<!--  <ExampleDropDown />-->
+
   <MidLayout>
     <ItemAsCard
       :id="item.id"
@@ -49,17 +64,11 @@ let show = ref(false)
       @tap="goToExampleDetailPage(item)"
       :image="item.image"
       :kvList="createItemKvListByItem(item)"
-      v-model:isCollect="item.is_collect"
       v-model:isCollected="item.is_collected"
       v-for="item in exampleList"
       :key="item.id"
     />
   </MidLayout>
-  <u-popup :show="show">
-    <view>
-      <text>出淤泥而不染，濯清涟而不妖</text>
-    </view>
-  </u-popup>
 </template>
 
 <style scoped lang="scss">
