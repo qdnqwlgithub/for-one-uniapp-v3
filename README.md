@@ -2,7 +2,11 @@
 
 WebStorm是全世界最好的前端开发工具之一
 
-# uView plus
+# vk uView
+
+```shell
+http://vkuviewdoc.fsq.pub/components/resource.html
+```
 
 # common queryWrapper
 
