@@ -13,10 +13,7 @@
       "path": "pages/index/index"
     },
     {
-      "path": "pages/example/index"
-    },
-    {
-      "path": "pages/detail/index"
+      "path": "pages/example/index/index"
     },
     {
       "path": "pages/search/index"
@@ -25,13 +22,16 @@
       "path": "pages/mine/index"
     },
     {
-      "path": "pages/example/detail"
+      "path": "pages/example/detail/index"
     },
     {
       "path": "pages/mine/example-collect/index"
     },
     {
       "path": "pages/mine/product-collect/index"
+    },
+    {
+      "path": "pages/detail/index"
     }
   ],
   "globalStyle": {
@@ -49,7 +49,7 @@
       },
       {
         "text": "案例展示",
-        "pagePath": "pages/example/index"
+        "pagePath": "pages/example/index/index"
       },
       {
         "text": "我的",

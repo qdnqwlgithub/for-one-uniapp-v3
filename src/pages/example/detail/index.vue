@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as _ from 'lodash'
-import Gallery from './gallery.vue'
+import Gallery from '@/pages/detail/gallery.vue'
 import { ref, defineProps, nextTick } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getExampleById, switchStatus } from '@/api/example.ts'

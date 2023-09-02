@@ -70,9 +70,9 @@ https://uiadmin.net/uview-plus/components/picker.html
 # code template
 
 ```
-<template></template>
-
 <script setup lang="ts"></script>
+
+<template></template>
 
 <style lang="scss" scoped></style>
 ```
