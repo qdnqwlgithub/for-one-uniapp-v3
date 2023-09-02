@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { MoreStatus } from '@/types/enums'
 import ExampleContainer from './example-container.vue'
-import { onLoad,onPullDownRefresh,onReachBottom } from '@dcloudio/uni-app'
+import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
 import { pageExample, listSpaceOptions, listStyleOptions } from '@/api/example'
 import { ref, reactive } from 'vue'
 let exampleList = ref([])
@@ -16,17 +16,19 @@ let totalPage = ref(0)
 let styleOptions = ref([])
 let spaceOptions = ref([])
 const doPageQuery = () => {
-  if(status.value==MoreStatus.NOMORE||status.value==MoreStatus.LOADING){
-    return;
+  if (status.value == MoreStatus.NOMORE || status.value == MoreStatus.LOADING) {
+    return
   }
-  pageExample(queryWrapper).then((r) => {
-    exampleList.value = exampleList.value.concat(r.items)
-    totalPage.value = r.pageInfo.totalPage
-  }).finally(()=>{
-    if(totalPage.value >= queryWrapper.pageNumber){
-      status.value=MoreStatus.NOMORE
-    }
-  })
+  pageExample(queryWrapper)
+    .then((r) => {
+      exampleList.value = exampleList.value.concat(r.items)
+      totalPage.value = r.pageInfo.totalPage
+    })
+    .finally(() => {
+      if (totalPage.value >= queryWrapper.pageNumber) {
+        status.value = MoreStatus.NOMORE
+      }
+    })
 }
 onLoad(() => {
   Promise.all([
@@ -52,14 +54,15 @@ const goToExampleDetailPage = (item) => {
 
 let show = ref(false)
 let status = ref('loadmore')
-onReachBottom(()=>{
+onReachBottom(() => {
   doPageQuery()
 })
 
-const handleChildEmit=()=>{
-  queryWrapper.pageNumber=1;
-  status.value=MoreStatus.LOADMORE
-  exampleList.value=[]
+const handleChildEmit = () => {
+  queryWrapper.pageNumber = 1
+  totalPage.value = 0
+  status.value = MoreStatus.LOADMORE
+  exampleList.value = []
   doPageQuery()
 }
 </script>
