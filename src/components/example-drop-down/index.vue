@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue'
-let show = ref(false)
+import { ref, defineProps, defineEmits, watch } from 'vue'
 let active = ref(undefined)
-const handleCollpseClose = () => {
-  show.value = false
-}
+import { ExampleQueryType } from '@/types/enums'
 let props = defineProps({
   spaceOptions: {
     type: Array,
@@ -21,29 +18,31 @@ let props = defineProps({
   styleSelectedIdsArray: {
     type: Array,
     default: []
+  },
+  show: {
+    type: Boolean
+  },
+  exampleQueryType: {
+    type: Number as () => ExampleQueryType
   }
 })
 let emits = defineEmits([
   'update:spaceSelectedIdsArray',
   'update:styleSelectedIdsArray',
-  'handleChildEmit'
+  'search',
+  'update:exampleQueryType'
 ])
-const setActive = (value) => {
-  if (active.value == value) {
-    active.value = undefined
+const handleTapButton = (exampleQueryType) => {
+  if (props.exampleQueryType == exampleQueryType) {
+    emits('update:exampleQueryType', undefined)
   } else {
-    active.value = value
+    emits('update:exampleQueryType', exampleQueryType)
   }
 }
 
 const emitDoSearch = () => {
-  active.value = undefined
-  emits('handleChildEmit')
-}
-
-enum LocallyType {
-  SPACE,
-  STYLE
+  emits('update:exampleQueryType', undefined)
+  emits('search')
 }
 
 const reset = () => {
@@ -53,8 +52,8 @@ const reset = () => {
 
 const addACondition = (locallyType, id) => {
   let arr = []
-  switch (locallyType) {
-    case LocallyType.SPACE:
+  switch (props.exampleQueryType) {
+    case ExampleQueryType.SPACE:
       if (props.spaceSelectedIdsArray.indexOf(id) >= 0) {
         arr = props.spaceSelectedIdsArray.filter((item) => {
           if (item == id) {
@@ -69,7 +68,7 @@ const addACondition = (locallyType, id) => {
       }
       emits('update:spaceSelectedIdsArray', arr)
       break
-    case LocallyType.STYLE:
+    case ExampleQueryType.STYLE:
       if (props.styleSelectedIdsArray.indexOf(id) >= 0) {
         arr = props.styleSelectedIdsArray.filter((item) => {
           if (item == id) {
@@ -91,17 +90,28 @@ const addACondition = (locallyType, id) => {
 <template>
   <view class="button-container">
     <up-button
-      :icon="active == 1 ? 'arrow-down' : 'arrow-up'"
+      :icon="
+        props.exampleQueryType == ExampleQueryType.SPACE
+          ? 'arrow-down'
+          : 'arrow-up'
+      "
       text="空间"
-      @tap="setActive(1)"
+      @tap="handleTapButton(ExampleQueryType.SPACE)"
     ></up-button>
     <up-button
-      :icon="active == 2 ? 'arrow-down' : 'arrow-up'"
+      :icon="
+        props.exampleQueryType == ExampleQueryType.STYLE
+          ? 'arrow-down'
+          : 'arrow-up'
+      "
       text="风格"
-      @tap="setActive(2)"
+      @tap="handleTapButton(ExampleQueryType.STYLE)"
     ></up-button>
   </view>
-  <view class="space-option-container" v-show="active == 1">
+  <view
+    class="space-option-container"
+    v-show="props.exampleQueryType == ExampleQueryType.SPACE"
+  >
     <up-button
       class="locally-button"
       v-for="spaceItem in spaceOptions"
@@ -112,7 +122,10 @@ const addACondition = (locallyType, id) => {
       @tap="addACondition(LocallyType.SPACE, spaceItem.id)"
     ></up-button>
   </view>
-  <view class="style-option-container" v-show="active == 2">
+  <view
+    class="style-option-container"
+    v-show="props.exampleQueryType == ExampleQueryType.STYLE"
+  >
     <up-button
       class="locally-button"
       v-for="styleItem in styleOptions"
@@ -123,7 +136,7 @@ const addACondition = (locallyType, id) => {
       @tap="addACondition(LocallyType.STYLE, styleItem.id)"
     ></up-button>
   </view>
-  <view class="button-container" v-show="active > 0">
+  <view class="button-container" v-show="props.exampleQueryType != undefined">
     <up-button @tap="reset" text="重置"></up-button>
     <up-button @tap="emitDoSearch" class="yes" text="确定"></up-button>
   </view>

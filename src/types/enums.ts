@@ -8,3 +8,8 @@ export enum MoreStatus {
   LOADING = 'loading',
   NOMORE = 'nomore'
 }
+
+export enum ExampleQueryType {
+  SPACE,
+  STYLE
+}

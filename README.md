@@ -48,6 +48,37 @@ https://juejin.cn/post/7118294114734440455#heading-11
 https://uiadmin.net/uview-plus/components/picker.html
 ```
 
+# about query
+
+**_可以参考src/pages/example/index/index.vue_**
+
+0. 判断loading，return/set true
+1. 判断status是否nomore(如果不能继续，把loading也false)
+2. lodaing=true
+3. 是否reset（可跳过）
+
+```
+queryWrapper.pageNumber = 1
+totalPage.value = 0
+exampleList.value = []
+```
+
+4. 如果下一页则page number++（可跳过）
+5. post request...
+6. 如果是3来的，catch，pageNumber--（可跳过）
+7. nextTick
+
+```
+nextTick(() => {
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    status.value = MoreStatus.NOMORE
+  } else {
+    status.value = MoreStatus.LOADMORE
+  }
+  loading.value=false
+})
+```
+
 # todo
 
 - array用ref还是rective？

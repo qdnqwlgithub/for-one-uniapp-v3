@@ -4,7 +4,7 @@
 const http = uni.$u.http
 
 // 为什么不用get？
-export const pageExample = (queryWrapper) => {
+export const pageExample = (queryWrapper, task) => {
   let realQeryWrapper = {}
   realQeryWrapper.style_category_id = queryWrapper.styleSelectedIdsArray
   realQeryWrapper.space_category_id = queryWrapper.spaceSelectedIdsArray
@@ -15,7 +15,11 @@ export const pageExample = (queryWrapper) => {
   if (queryWrapper.pageNumber) {
     realQeryWrapper.page = queryWrapper.pageNumber
   }
-  return http.post('/api/onlyforone/cases/list', realQeryWrapper)
+  return http.post('/api/onlyforone/cases/list', realQeryWrapper, {
+    getTask: (task1, options) => {
+      task = task1
+    }
+  })
 }
 
 export const getExampleById = (id) =>
@@ -32,3 +36,17 @@ export const listSpaceOptions = () =>
 
 export const listStyleOptions = () =>
   http.get(`/api/onlyforone/caseStyleCategory/list`)
+
+export const pageCollectExample = (queryWrapper, task) => {
+  let realQeryWrapper = {}
+  realQeryWrapper.style_category_id = queryWrapper.styleSelectedIdsArray
+  realQeryWrapper.space_category_id = queryWrapper.spaceSelectedIdsArray
+  realQeryWrapper.keyword = queryWrapper.keyword
+  if (queryWrapper.pageSize) {
+    realQeryWrapper.page_size = queryWrapper.pageSize
+  }
+  if (queryWrapper.pageNumber) {
+    realQeryWrapper.page = queryWrapper.pageNumber
+  }
+  return http.post('/api/onlyforone/caseCollection/index', realQeryWrapper)
+}
