@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import RealIndex from '@/pages/example/real-index/index.vue'
+import ExampleIndex from '@/pages/example/index/index.vue'
 </script>
 
 <template>
   <ForOneHeader :enable-back="true" />
-  <RealIndex />
+  <ExampleIndex :isComponent="true" />
 </template>
 
 <style scoped lang="scss"></style>

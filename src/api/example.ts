@@ -15,11 +15,7 @@ export const pageExample = (queryWrapper, task) => {
   if (queryWrapper.pageNumber) {
     realQeryWrapper.page = queryWrapper.pageNumber
   }
-  return http.post('/api/onlyforone/cases/list', realQeryWrapper, {
-    getTask: (task1, options) => {
-      task = task1
-    }
-  })
+  return http.post('/api/onlyforone/cases/list', realQeryWrapper)
 }
 
 export const getExampleById = (id) =>
@@ -37,7 +33,7 @@ export const listSpaceOptions = () =>
 export const listStyleOptions = () =>
   http.get(`/api/onlyforone/caseStyleCategory/list`)
 
-export const pageCollectExample = (queryWrapper, task) => {
+export const pageCollectExample = (queryWrapper) => {
   let realQeryWrapper = {}
   realQeryWrapper.style_category_id = queryWrapper.styleSelectedIdsArray
   realQeryWrapper.space_category_id = queryWrapper.spaceSelectedIdsArray

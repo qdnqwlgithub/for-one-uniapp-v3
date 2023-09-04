@@ -50,7 +50,7 @@ const reset = () => {
   emits('update:styleSelectedIdsArray', [])
 }
 
-const addACondition = (locallyType, id) => {
+const addACondition = (id) => {
   let arr = []
   switch (props.exampleQueryType) {
     case ExampleQueryType.SPACE:
@@ -119,7 +119,7 @@ const addACondition = (locallyType, id) => {
       size="mini"
       :class="{ yes: spaceSelectedIdsArray.indexOf(spaceItem.id) >= 0 }"
       :text="spaceItem.name"
-      @tap="addACondition(LocallyType.SPACE, spaceItem.id)"
+      @tap="addACondition(spaceItem.id)"
     ></up-button>
   </view>
   <view
@@ -133,7 +133,7 @@ const addACondition = (locallyType, id) => {
       :class="{ yes: styleSelectedIdsArray.indexOf(styleItem.id) >= 0 }"
       size="mini"
       :text="styleItem.name"
-      @tap="addACondition(LocallyType.STYLE, styleItem.id)"
+      @tap="addACondition(styleItem.id)"
     ></up-button>
   </view>
   <view class="button-container" v-show="props.exampleQueryType != undefined">

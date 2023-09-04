@@ -13,6 +13,13 @@ const createItemKvListByItem = (item) => {
   kvList.push(item.title)
   return kvList
 }
+
+
+const goToExampleDetailPage = (item) => {
+  uni.navigateTo({
+    url: `/pages/example/detail/index?id=${item.id}`
+  })
+}
 </script>
 
 <template>

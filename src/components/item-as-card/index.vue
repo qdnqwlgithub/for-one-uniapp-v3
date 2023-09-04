@@ -45,10 +45,11 @@ const handleTapCollectByExample = _.debounce((id) => {
     emits('update:isCollected', !props.isCollected)
   })
 }, 500)
+
 </script>
 
 <template>
-  <view class="item-container">
+  <view class="item-container" @tap="goToDetailPage">
     <up-image
       :class="{
         'product-img': props.origin === ItemAsCardType.PRODUCT,

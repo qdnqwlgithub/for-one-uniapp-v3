@@ -13,6 +13,7 @@ enum QueryType {
   SPACE,
   STYLE
 }
+let status = ref(MoreStatus.LOADMORE)
 let exampleQueryType = ref(undefined)
 let loading = ref(true)
 let props = defineProps({
@@ -35,9 +36,9 @@ let spaceOptions = ref([])
 const doPageQuery = () => {
   let p = undefined
   if (props.isComponent) {
-    p = pageCollectExample(queryWrapper, task)
+    p = pageCollectExample(queryWrapper)
   } else {
-    p = pageExample(queryWrapper, task)
+    p = pageExample(queryWrapper)
   }
   return p
 }
@@ -60,7 +61,7 @@ const finallyDoPageQuery = () => {
 
 onLoad(() => {
   Promise.all([
-    pageExample(queryWrapper),
+  doPageQuery(),
     listSpaceOptions(),
     listStyleOptions()
   ])
@@ -77,12 +78,6 @@ onLoad(() => {
     })
 })
 
-const goToExampleDetailPage = (item) => {
-  uni.navigateTo({
-    url: `/pages/example/detail/index?id=${item.id}`
-  })
-}
-let status = ref(MoreStatus.LOADMORE)
 onReachBottom(() => {
   if (loading.value) return
   if (status.value == MoreStatus.NOMORE) {
@@ -118,14 +113,10 @@ const doSearchByDropdown = () => {
       finallyDoPageQuery()
     })
 }
-
-const handleAboutShow = (showFromChild) => {
-  show.value = showFromChild
-}
 </script>
 
 <template>
-  <ForOneHeader />
+  <ForOneHeader v-if="!isComponent" />
   <u-search
     height="65rpx"
     :clearabled="true"

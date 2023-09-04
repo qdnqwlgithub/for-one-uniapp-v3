@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as _ from 'lodash'
-import Gallery from '@/pages/detail/gallery.vue'
+import Gallery from '@/pages/example/detail/gallery.vue'
 import { ref, defineProps, nextTick } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getExampleById, switchStatus } from '@/api/example.ts'
@@ -65,6 +65,7 @@ const handleDoCollectFromChild = _.debounce((item) => {
       <Gallery :arr="item.gallery" />
     </MidLayout>
   </view>
+  <MidGap />
   <u-loading-page></u-loading-page>
 </template>
 
