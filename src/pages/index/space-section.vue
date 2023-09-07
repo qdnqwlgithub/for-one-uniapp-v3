@@ -4,15 +4,14 @@
       left-text="SPACE CASE"
       mid-text="空间案例"
       right-text="更多"
+      @tapRight="switchToExample"
     ></IndexTitle>
-    <ImageFont
-      class="mid-image-font"
-      :image-path="indexCase.image"
-      v-for="indexCase in indexCaseList"
-      :key="indexCase.id"
-    >
-      <template #left>{{ indexCase.title }}</template>
-    </ImageFont>
+    <view v-for="indexCase in indexCaseList" :key="indexCase.id">
+      <ImageAndFont :image-path="indexCase.image">
+        <template #left>{{ indexCase.title }}</template>
+      </ImageAndFont>
+      <MidGap />
+    </view>
   </MidLayout>
 </template>
 
@@ -27,6 +26,9 @@ onBeforeMount(() => {
     indexCaseList.value = r
   })
 })
+const switchToExample = () => {
+  uni.switchTab({ url: '/pages/example/index/index' })
+}
 </script>
 
 <style lang="scss" scoped>

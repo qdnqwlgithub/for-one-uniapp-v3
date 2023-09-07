@@ -35,17 +35,16 @@ const runPageCollectGood = () => {
     <ForOneHeader :enable-back="true" />
     <MidGap />
     <MidLayout>
-    <view class="content">
-      <ItemsContainer
-        :status="status"
-        @on-lower="runPageCollectGood"
-        class="items-container"
-        :itemList="goodList"
-      />
-    </view>
-  </MidLayout>
-  <MidGap />
-
+      <view class="content">
+        <ItemsContainer
+          :status="status"
+          @on-lower="runPageCollectGood"
+          class="items-container"
+          :itemList="goodList"
+        />
+      </view>
+    </MidLayout>
+    <MidGap />
   </view>
 </template>
 

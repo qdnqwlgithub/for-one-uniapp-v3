@@ -3,7 +3,7 @@ import { ItemAsCardType } from '@/types/enums'
 import { collectGood, cancelCollectGood } from '@/api/search'
 import { switchStatus } from '@/api/example'
 import * as _ from 'lodash'
-import { nextTick, ref, defineEmits, defineProps, computed } from 'vue'
+import {  ref, defineEmits, defineProps } from 'vue'
 let emits = defineEmits(['update:isCollect', 'update:isCollected'])
 let props = defineProps({
   image: {
@@ -27,11 +27,10 @@ let props = defineProps({
   }
 })
 let iconFontSize = ref('40rpx')
-let loadding = ref([])
 const handleTapCollectByProduct = _.debounce((id) => {
   if (props.isCollect) {
     cancelCollectGood(id).then(() => {
-      emits('update:isCollect', true)
+      emits('update:isCollect', false)
     })
   } else {
     collectGood(id).then(() => {
@@ -45,7 +44,6 @@ const handleTapCollectByExample = _.debounce((id) => {
     emits('update:isCollected', !props.isCollected)
   })
 }, 500)
-
 </script>
 
 <template>
@@ -98,7 +96,6 @@ const handleTapCollectByExample = _.debounce((id) => {
   aspect-ratio: 16/9;
 }
 .item-container {
-  //margin-top: 20rpx;
   width: 100%;
   border-radius: 15rpx;
   overflow: hidden;

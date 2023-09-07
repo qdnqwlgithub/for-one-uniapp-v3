@@ -31,6 +31,7 @@ export const pageGood = (queryWrapper) => {
   if (queryWrapper.pageNumber) {
     realQeryWrapper.page = queryWrapper.pageNumber
   }
+  realQeryWrapper.keyword = queryWrapper.keyword
   return http.get(`/g_data/api/sale/goodsMainCategoryCombo/getForoneGoods`, {
     params: realQeryWrapper
   })

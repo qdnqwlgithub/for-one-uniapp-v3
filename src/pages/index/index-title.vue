@@ -7,14 +7,20 @@
       <view class="mid">{{ midText }}</view>
     </up-col>
     <up-col span="4">
-      <view class="right">{{ rightText }}</view>
+      <view v-if="rightText" @tap="emitTapRight" class="right">{{
+        rightText
+      }}</view>
     </up-col>
   </up-row>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 defineProps(['leftText', 'midText', 'rightText'])
+let emits = defineEmits(['tapRight'])
+const emitTapRight = () => {
+  emits('tapRight')
+}
 </script>
 
 <style lang="scss" scoped>

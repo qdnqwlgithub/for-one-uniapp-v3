@@ -1,22 +1,17 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
-let props=defineProps({
+import { ref, reactive, nextTick, defineProps, onBeforeMount } from 'vue'
+import { LoadMoreStatus } from '@/types/enums'
+import C2Scroll from './c2-scroll'
+import C3Scroll from './c3-scroll'
+import ItemsContainer from './items-container'
+import { getC2ListByC1Id, getC3ListByC1IdAndC2Id, pageGood } from '@/api/search'
+let loadMoreStatus = ref(LoadMoreStatus.MORE)
+let props = defineProps({
   c1Id: {
     type: String,
     requreid: true
   }
 })
-let loading = ref(true)
-import C2Scroll from './c2-scroll'
-import C3Scroll from './c3-scroll'
-import ItemsContainer from './items-container'
-import { onLoad } from '@dcloudio/uni-app'
-import {
-  getC2ListByC1Id,
-  getC3ListByC1IdAndC2Id,
-  pageGood
-} from '../../api/search'
-import { ref, reactive, nextTick } from 'vue'
 let queryWrapper = reactive({
   c1Id: undefined,
   c2Id: undefined,
@@ -29,40 +24,28 @@ let c2List = ref([])
 let c3List = ref([])
 let goodList = ref([])
 let totalPage = ref(0)
-onLoad(() => {
-  queryWrapper.c1Id=props.c1Id
-  init()
+onBeforeMount(async () => {
+  loadMoreStatus.value = LoadMoreStatus.LOADING
+  queryWrapper.c1Id = props.c1Id
+  c2List.value = await getC2ListByC1Id(queryWrapper.c1Id)
+  if (c2List.value.length > 0) {
+    queryWrapper.c2Id = c2List.value[0].id
+    c3List.value = await getC3ListByC1IdAndC2Id(
+      queryWrapper.c1Id,
+      queryWrapper.c2Id
+    )
+  }
+  let { pageInfo, items } = await pageGood(queryWrapper)
+  goodList.value = items
+  totalPage.value = pageInfo.totalPage
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    loadMoreStatus.value = LoadMoreStatus.NOMORE
+  } else {
+    loadMoreStatus.value = LoadMoreStatus.MORE
+  }
 })
-const init = () => {
-  loading.value = true
-  getC2ListByC1Id(queryWrapper.c1Id)
-    .then((r) => {
-      c2List = r
-      if (c2List.length > 0) {
-        queryWrapper.c2Id = c2List[0].id
-      }
-      return getC3ListByC1IdAndC2Id(queryWrapper.c1Id, queryWrapper.c2Id)
-    })
-    .then((r) => {
-      c3List.value = r
-      return pageGood(queryWrapper)
-    })
-    .then((r) => {
-      goodList.value = r.items
-      totalPage.value = r.pageInfo.totalPage
-    })
-    .finally(() => {
-      nextTick(() => {
-        loading.value = false
-      })
-    })
-}
 
 const handleC2Tap = async (c2Id) => {
-  if (loading.value) {
-    return
-  }
-  loading.value = true
   // 一些初始化的操作
   c3List.value = []
   goodList.value = []
@@ -70,6 +53,7 @@ const handleC2Tap = async (c2Id) => {
   queryWrapper.c2Id = c2Id
   queryWrapper.c3Id = undefined
   queryWrapper.pageNumber = 1
+  loadMoreStatus.value = LoadMoreStatus.LOADING
   c3List.value = await getC3ListByC1IdAndC2Id(
     queryWrapper.c1Id,
     queryWrapper.c2Id
@@ -77,50 +61,57 @@ const handleC2Tap = async (c2Id) => {
   let { pageInfo, items } = await pageGood(queryWrapper)
   goodList.value = items
   totalPage.value = pageInfo.totalPage
-  nextTick(() => {
-    loading.value = false
-  })
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    loadMoreStatus.value = LoadMoreStatus.NOMORE
+  } else {
+    loadMoreStatus.value = LoadMoreStatus.MORE
+  }
 }
 
 const handleC3Tap = async (c3Id) => {
-  if (loading.value) {
-    return
-  }
-  loading.value = true
   goodList.value = []
   totalPage.value = 0
   queryWrapper.c3Id = c3Id
   queryWrapper.pageNumber = 1
+  loadMoreStatus.value = LoadMoreStatus.LOADING
   let { pageInfo, items } = await pageGood(queryWrapper)
   goodList.value = items
   totalPage.value = pageInfo.totalPage
-  nextTick(() => {
-    loading.value = false
-  })
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    loadMoreStatus.value = LoadMoreStatus.NOMORE
+  } else {
+    loadMoreStatus.value = LoadMoreStatus.MORE
+  }
 }
 
-let status = ref('loadmore')
-
 const handleOnLower = async () => {
-  if (status.value == 'nomore' || queryWrapper.pageNumber >= totalPage) {
+  if (loadMoreStatus.value == LoadMoreStatus.NOMORE) {
     return
   }
-  if (loading.value) {
-    return
-  }
-  loading.value = true
   queryWrapper.pageNumber++
   let { pageInfo, items } = await pageGood(queryWrapper)
   goodList.value = goodList.value.concat(items)
   totalPage.value = pageInfo.totalPage
-  if (queryWrapper.pageNumber >= totalPage.value) {
-    console.log(queryWrapper.pageNumber)
-    console.log(totalPage.value)
-    status.value = 'nomore'
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    loadMoreStatus.value = LoadMoreStatus.NOMORE
+  } else {
+    loadMoreStatus.value = LoadMoreStatus.MORE
   }
-  nextTick(() => {
-    loading.value = false
-  })
+}
+
+const handleInputSearch = async () => {
+  goodList.value = []
+  totalPage.value = 0
+  queryWrapper.pageNumber = 1
+  loadMoreStatus.value = LoadMoreStatus.MORE
+  let { pageInfo, items } = await pageGood(queryWrapper)
+  goodList.value = items
+  totalPage.value = pageInfo.totalPage
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    loadMoreStatus.value = LoadMoreStatus.NOMORE
+  } else {
+    loadMoreStatus.value = LoadMoreStatus.MORE
+  }
 }
 </script>
 
@@ -130,6 +121,8 @@ const handleOnLower = async () => {
     <view class="search-container">
       <view class="input-container">
         <u-search
+          @search="handleInputSearch"
+          @clear="handleInputSearch"
           height="70rpx"
           :showAction="false"
           :clearabled="true"
@@ -151,16 +144,15 @@ const handleOnLower = async () => {
             :c3Id="queryWrapper.c3Id"
             @do="handleC3Tap"
           />
-          <ItemsContainer
-            :status="status"
-            @on-lower="handleOnLower"
-            class="items-container"
-            :itemList="goodList"
-          />
+            <ItemsContainer
+              :loadMoreStatus="loadMoreStatus"
+              @on-lower="handleOnLower"
+              class="items-container"
+              :itemList="goodList"
+            />
         </view>
       </view>
     </view>
-    <u-loading-page :loading="loading"></u-loading-page>
   </view>
 </template>
 
@@ -170,12 +162,10 @@ const handleOnLower = async () => {
   display: flex;
   flex-direction: column;
 }
-// $container-height: cala(100vh - )
 
 .search-container {
   flex: 1;
   overflow: hidden;
-  // height: 100vh;
   display: flex;
   flex-direction: column;
   .input-container {

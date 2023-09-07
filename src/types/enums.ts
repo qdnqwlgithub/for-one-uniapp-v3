@@ -3,10 +3,10 @@ export enum ItemAsCardType {
   EXAMPLE
 }
 
-export enum MoreStatus {
-  LOADMORE = 'loadmore',
+export enum LoadMoreStatus {
+  MORE = 'more',
   LOADING = 'loading',
-  NOMORE = 'nomore'
+  NOMORE = 'no-more'
 }
 
 export enum ExampleQueryType {

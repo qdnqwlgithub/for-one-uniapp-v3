@@ -1,31 +1,12 @@
 <template>
   <MidLayout>
-    <IndexTitle
-      left-text="UNION"
-      mid-text="专店加盟"
-      right-text="更多"
-    ></IndexTitle>
-    <ImageFont
-      class="mid-image-font"
-      :image-path="union.image"
-      v-for="union in unionList"
-      :key="union.id"
-    >
-      <template #left>{{ union.title }}</template>
-    </ImageFont>
-    <!-- <div class="item" v-for="union in unionList" :key="union.id">
-      <up-image
-        mode="scaleToFill"
-        :src="union.image"
-        width="700rpx"
-        height="400rpx"
-      ></up-image>
-      <div class="mid-title">
-        <span>{{ union.title }}</span>
-        <span style="margin: 0 12rpx">|</span>
-        <span>{{ union.space }}</span>
-      </div>
-    </div> -->
+    <IndexTitle left-text="UNION" mid-text="专店加盟"></IndexTitle>
+    <view v-for="union in unionList" :key="union.id">
+      <ImageAndFont :image-path="union.image">
+        <template #left>{{ union.title }}</template>
+      </ImageAndFont>
+      <MidGap />
+    </view>
   </MidLayout>
 </template>
 
@@ -43,19 +24,6 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss" scoped>
-// .item {
-//   position: relative;
-//   margin-bottom: 20rpx;
-//   > .mid-title {
-//     position: absolute;
-//     background-color: rgba(0, 0, 0, 0.5);
-//     left: 0;
-//     right: 0;
-//     bottom: 0;
-//     color: white;
-//     padding: 20rpx 30rpx;
-//   }
-// }
 .mid-image-font {
   margin-bottom: 15rpx;
 }

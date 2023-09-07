@@ -36,7 +36,7 @@ const createItemKvListByItem = (item) => {
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 20rpx;
-  column-gap: 20rpx;
+  row-gap: 10rpx;
+  column-gap: 10rpx;
 }
 </style>

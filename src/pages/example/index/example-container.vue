@@ -14,7 +14,6 @@ const createItemKvListByItem = (item) => {
   return kvList
 }
 
-
 const goToExampleDetailPage = (item) => {
   uni.navigateTo({
     url: `/pages/example/detail/index?id=${item.id}`

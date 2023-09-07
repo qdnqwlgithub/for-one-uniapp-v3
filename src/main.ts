@@ -14,7 +14,7 @@ import MidIcon from '@/components/mid-icon'
 import MidGap from '@/components/mid-gap'
 import MidOverlay from '@/components/mid-overlay'
 import MidButton from '@/components/mid-button'
-import ImageFont from '@/components/image-font'
+import ImageAndFont from '@/components/image-and-font'
 import ForOneHeader from '@/components/for-one-header'
 import MidShareButton from '@/components/mid-share-button'
 import ExampleDropDown from '@/components/example-drop-down'
@@ -28,7 +28,7 @@ export function createApp() {
   app.component('MidIcon', MidIcon)
   app.component('MidOverlay', MidOverlay)
   app.component('MidButton', MidButton)
-  app.component('ImageFont', ImageFont)
+  app.component('ImageAndFont', ImageAndFont)
   app.component('ForOneHeader', ForOneHeader)
   app.component('MidShareButton', MidShareButton)
   app.component('ItemAsCard', ItemAsCard)

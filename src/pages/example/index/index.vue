@@ -60,11 +60,7 @@ const finallyDoPageQuery = () => {
 }
 
 onLoad(() => {
-  Promise.all([
-  doPageQuery(),
-    listSpaceOptions(),
-    listStyleOptions()
-  ])
+  Promise.all([doPageQuery(), listSpaceOptions(), listStyleOptions()])
     .then((r) => {
       // 0
       thenDoPageQuery(r[0])
