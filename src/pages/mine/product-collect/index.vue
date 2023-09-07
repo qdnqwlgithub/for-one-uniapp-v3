@@ -1,33 +1,36 @@
 <script setup lang="ts">
 import ItemsContainer from '@/pages/search/items-container/index.vue'
-import { ref, reactive } from 'vue'
+import { LoadMoreStatus } from '@/types/enums'
+import { ref, reactive, onBeforeMount } from 'vue'
+import { onReachBottom } from '@dcloudio/uni-app'
 import { pageCollectGood } from '@/api/mine'
-import { onLoad } from '@dcloudio/uni-app'
 let queryWrapper = reactive({
-  pageSize: 5,
+  pageSize: 10,
   pageNumber: 0
-  // other parameter
 })
+let loadMoreStatus=ref(LoadMoreStatus.MORE)
 let totalPage = ref(0)
 let goodList = ref([])
-onLoad(() => {
+onBeforeMount(() => {
   runPageCollectGood()
 })
-const runPageCollectGood = () => {
+const runPageCollectGood = async () => {
+  if (loadMoreStatus.value == LoadMoreStatus.NOMORE) return
+  loadMoreStatus.value = LoadMoreStatus.LOADING
   queryWrapper.pageNumber++
-  pageCollectGood(queryWrapper)
-    .then((r) => {
-      let { items, pageInfo } = r
-      goodList.value = goodList.value.concat(
-        items.map((item) => item['good_info'])
-      )
-      totalPage.value = pageInfo.totalPage
-    })
-    .catch(() => {
-      queryWrapper.pageNumber--
-    })
-    .finally(() => {})
+  let { pageInfo, items } = await pageCollectGood(queryWrapper)
+  goodList.value = goodList.value.concat(items.map(item=>item.good_info))
+  totalPage.value = pageInfo.totalPage
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    loadMoreStatus.value = LoadMoreStatus.NOMORE
+  } else {
+    loadMoreStatus.value = LoadMoreStatus.MORE
+  }
 }
+
+onReachBottom( () => {
+  runPageCollectGood()
+})
 </script>
 
 <template>
@@ -35,7 +38,7 @@ const runPageCollectGood = () => {
     <ForOneHeader :enable-back="true" />
     <MidGap height="10rpx" />
     <ItemsContainer
-      :status="status"
+      :loadMoreStatus="loadMoreStatus"
       @on-lower="runPageCollectGood"
       class="items-container"
       :itemList="goodList"

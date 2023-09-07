@@ -18,7 +18,7 @@ onBeforeMount(async () => {
   spaceOptions.value = await listSpaceOptions()
   styleOptions.value = await listStyleOptions()
 })
-let loadMoreStatus = ref(LoadMoreStatus.NOMORE)
+let loadMoreStatus = ref(LoadMoreStatus.MORE)
 let exampleQueryType = ref(undefined)
 let props = defineProps({
   isComponent: {
