@@ -10,7 +10,7 @@ onLoad(() => {
 })
 const goToSearchPage = (item) => {
   uni.navigateTo({
-    url: `/pages/search/index?c1Id=${item.id}`
+    url: `/pages/search/index?c1Id=${item.path}`
   })
 }
 </script>

@@ -22,7 +22,6 @@ import SpaceSection from './space-section.vue'
 import { useBannerStore } from '@/store/banner'
 const bannerStore = useBannerStore()
 import { ref, onBeforeMount } from 'vue'
-// let loading = ref(true)
 onBeforeMount(() => {
   bannerStore.initBannerListByStore()
 })

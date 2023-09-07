@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { defineProps } from 'vue'
+let props=defineProps({
+  c1Id: {
+    type: String,
+    requreid: true
+  }
+})
 let loading = ref(true)
 import C2Scroll from './c2-scroll'
 import C3Scroll from './c3-scroll'
@@ -22,8 +29,8 @@ let c2List = ref([])
 let c3List = ref([])
 let goodList = ref([])
 let totalPage = ref(0)
-onLoad((options) => {
-  queryWrapper.c1Id = '墙板'
+onLoad(() => {
+  queryWrapper.c1Id=props.c1Id
   init()
 })
 const init = () => {
