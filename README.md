@@ -82,19 +82,19 @@ nextTick(() => {
 # todo
 
 - array用ref还是rective？
-- 页面生命周期钩子函数review
-- loadding动画的review
-- sometime, chrome会报异常或者错误
+- 页面生命周期钩子函数review(done)
+- loadding动画的review(abort)
+- sometime, chrome会报异常或者错误(done)
 - search.page 动画应该分为全屏过度、部分过渡，一直全屏过度好像很卡的样子，虽然后台真的卡
 - 部分代码待优化，全局搜索todo逐个解决
-- 更多花色布局space-between不生效
-- search.page input
-- example dropdown
+- 更多花色布局space-between不生效（done）
+- search.page input(done)
+- example dropdown(done)
 - sticky
-- empty内容为空
+- empty内容为空(done)
 - color in uView in component
 - image click detail
-- v-model原理
+- v-model原理(done)
 - the code of response校验
 - the r of foroneheader
 

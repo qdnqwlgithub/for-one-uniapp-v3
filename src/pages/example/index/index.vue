@@ -1,21 +1,25 @@
 <script setup lang="ts">
-import { MoreStatus, ExampleQueryType } from '@/types/enums'
+import { LoadMoreStatus, ExampleQueryType } from '@/types/enums'
+import { onReachBottom } from '@dcloudio/uni-app'
 import ExampleContainer from './example-container.vue'
-import { onLoad, onReachBottom } from '@dcloudio/uni-app'
 import {
   pageExample,
   listSpaceOptions,
   listStyleOptions,
   pageCollectExample
 } from '@/api/example'
-import { ref, reactive, defineProps, nextTick } from 'vue'
+import { ref, reactive, defineProps, onBeforeMount } from 'vue'
 enum QueryType {
   SPACE,
   STYLE
 }
-let status = ref(MoreStatus.LOADMORE)
+onBeforeMount(async () => {
+  doPageQuery()
+  spaceOptions.value = await listSpaceOptions()
+  styleOptions.value = await listStyleOptions()
+})
+let loadMoreStatus = ref(LoadMoreStatus.NOMORE)
 let exampleQueryType = ref(undefined)
-let loading = ref(true)
 let props = defineProps({
   isComponent: {
     type: Boolean,
@@ -33,112 +37,84 @@ let queryWrapper = reactive({
 let totalPage = ref(0)
 let styleOptions = ref([])
 let spaceOptions = ref([])
-const doPageQuery = () => {
-  let p = undefined
+const doPageQuery = async () => {
+  loadMoreStatus.value = LoadMoreStatus.LOADING
+  let r = undefined
   if (props.isComponent) {
-    p = pageCollectExample(queryWrapper)
+    r = await pageCollectExample(queryWrapper)
   } else {
-    p = pageExample(queryWrapper)
+    r = await pageExample(queryWrapper)
   }
-  return p
+  let { pageInfo, items } = r
+  exampleList.value.push(...items)
+  totalPage.value = pageInfo.totalPage
+  if (totalPage.value <= queryWrapper.pageNumber) {
+    loadMoreStatus.value = LoadMoreStatus.NOMORE
+  } else {
+    loadMoreStatus.value = LoadMoreStatus.MORE
+  }
 }
-
-const thenDoPageQuery = (r) => {
-  exampleList.value = exampleList.value.concat(r.items)
-  totalPage.value = r.pageInfo.totalPage
-}
-
-const finallyDoPageQuery = () => {
-  nextTick(() => {
-    if (totalPage.value <= queryWrapper.pageNumber) {
-      status.value = MoreStatus.NOMORE
-    } else {
-      status.value = MoreStatus.LOADMORE
-    }
-    loading.value = false
-  })
-}
-
-onLoad(() => {
-  Promise.all([doPageQuery(), listSpaceOptions(), listStyleOptions()])
-    .then((r) => {
-      // 0
-      thenDoPageQuery(r[0])
-      // 1
-      spaceOptions.value = r[1]
-      // 2
-      styleOptions.value = r[2]
-    })
-    .finally(() => {
-      finallyDoPageQuery()
-    })
-})
-
 onReachBottom(() => {
-  if (loading.value) return
-  if (status.value == MoreStatus.NOMORE) {
-    loading.value = false
+  if (loadMoreStatus.value == LoadMoreStatus.NOMORE) {
     return
   }
-  loading.value = true
   queryWrapper.pageNumber++
   doPageQuery()
-    .then((r) => {
-      thenDoPageQuery(r)
-    })
-    .catch(() => {
-      queryWrapper.pageNumber--
-    })
-    .finally(() => {
-      finallyDoPageQuery()
-    })
 })
 
 const doSearchByDropdown = () => {
-  if (loading.value) return
-  loading.value = true
-  status.value = MoreStatus.LOADING
   queryWrapper.pageNumber = 1
   totalPage.value = 0
   exampleList.value = []
   doPageQuery()
-    .then((r) => {
-      thenDoPageQuery(r)
-    })
-    .finally(() => {
-      finallyDoPageQuery()
-    })
+}
+
+const handleInputSearch = async () => {
+  queryWrapper.pageNumber = 1
+  totalPage.value = 0
+  exampleList.value = []
+  doPageQuery()
 }
 </script>
 
 <template>
-  <ForOneHeader v-if="!isComponent" />
-  <u-search
-    height="65rpx"
-    :clearabled="true"
-    :showAction="false"
-    v-model="queryWrapper.keyword"
-  ></u-search>
-  <ExampleDropDown
-    :spaceOptions="spaceOptions"
-    v-model:spaceSelectedIdsArray="queryWrapper.spaceSelectedIdsArray"
-    :styleOptions="styleOptions"
-    v-model:styleSelectedIdsArray="queryWrapper.styleSelectedIdsArray"
-    @search="doSearchByDropdown"
-    v-model:exampleQueryType="exampleQueryType"
-  />
-  <view class="example-container-c">
-    <MidGap />
-    <MidLayout>
-      <ExampleContainer :data="exampleList" />
-    </MidLayout>
-    <MidOverlay v-model:exampleQueryType="exampleQueryType" />
+  <view class="example-index-container">
+    <ForOneHeader v-if="!isComponent" />
+    <view class="input-container">
+      <u-search
+        @search="handleInputSearch"
+        @clear="handleInputSearch"
+        height="70rpx"
+        :clearabled="true"
+        :showAction="false"
+        v-model="queryWrapper.keyword"
+      ></u-search>
+    </view>
+    <ExampleDropDown
+      :spaceOptions="spaceOptions"
+      v-model:spaceSelectedIdsArray="queryWrapper.spaceSelectedIdsArray"
+      :styleOptions="styleOptions"
+      v-model:styleSelectedIdsArray="queryWrapper.styleSelectedIdsArray"
+      @search="doSearchByDropdown"
+      v-model:exampleQueryType="exampleQueryType"
+    />
+    <view class="example-container-c">
+      <MidGap height="10rpx" />
+      <MidLayout>
+        <ExampleContainer :data="exampleList" />
+        <uni-load-more :status="loadMoreStatus"></uni-load-more>
+      </MidLayout>
+      <MidOverlay v-model:exampleQueryType="exampleQueryType" />
+    </view>
   </view>
-  <u-loadmore :status="status" />
-  <u-loading-page :loading="loading"></u-loading-page>
 </template>
 
 <style scoped lang="scss">
+.example-index-container {
+  .input-container {
+    padding: 0 10rpx;
+  }
+}
 .example-container-c {
   position: relative;
 }

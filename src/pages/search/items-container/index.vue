@@ -10,7 +10,6 @@ import ItemContent from '@/pages/search/items-container/item-content.vue'
 
 <template>
   <scroll-view scroll-y="true" class="scroll-Y" @scrolltolower="onLower">
-    <MidGap height="10rpx" />
     <ItemContent :item-list="props.itemList" />
     <uni-load-more :status="props.loadMoreStatus"></uni-load-more>
   </scroll-view>

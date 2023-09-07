@@ -3,7 +3,7 @@ import { ItemAsCardType } from '@/types/enums'
 import { collectGood, cancelCollectGood } from '@/api/search'
 import { switchStatus } from '@/api/example'
 import * as _ from 'lodash'
-import {  ref, defineEmits, defineProps } from 'vue'
+import { ref, defineEmits, defineProps } from 'vue'
 let emits = defineEmits(['update:isCollect', 'update:isCollected'])
 let props = defineProps({
   image: {

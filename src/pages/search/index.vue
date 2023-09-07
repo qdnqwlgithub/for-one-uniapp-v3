@@ -5,7 +5,7 @@ import C2Scroll from './c2-scroll'
 import C3Scroll from './c3-scroll'
 import ItemsContainer from './items-container'
 import { getC2ListByC1Id, getC3ListByC1IdAndC2Id, pageGood } from '@/api/search'
-let loadMoreStatus = ref(LoadMoreStatus.MORE)
+let loadMoreStatus = ref(LoadMoreStatus.NOMORE)
 let props = defineProps({
   c1Id: {
     type: String,
@@ -103,7 +103,7 @@ const handleInputSearch = async () => {
   goodList.value = []
   totalPage.value = 0
   queryWrapper.pageNumber = 1
-  loadMoreStatus.value = LoadMoreStatus.MORE
+  loadMoreStatus.value = LoadMoreStatus.LOADING
   let { pageInfo, items } = await pageGood(queryWrapper)
   goodList.value = items
   totalPage.value = pageInfo.totalPage
@@ -144,12 +144,12 @@ const handleInputSearch = async () => {
             :c3Id="queryWrapper.c3Id"
             @do="handleC3Tap"
           />
-            <ItemsContainer
-              :loadMoreStatus="loadMoreStatus"
-              @on-lower="handleOnLower"
-              class="items-container"
-              :itemList="goodList"
-            />
+          <ItemsContainer
+            :loadMoreStatus="loadMoreStatus"
+            @on-lower="handleOnLower"
+            class="items-container"
+            :itemList="goodList"
+          />
         </view>
       </view>
     </view>

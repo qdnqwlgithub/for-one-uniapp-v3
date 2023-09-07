@@ -33,30 +33,14 @@ const runPageCollectGood = () => {
 <template>
   <view class="product-collect-container">
     <ForOneHeader :enable-back="true" />
-    <MidGap />
-    <MidLayout>
-      <view class="content">
-        <ItemsContainer
-          :status="status"
-          @on-lower="runPageCollectGood"
-          class="items-container"
-          :itemList="goodList"
-        />
-      </view>
-    </MidLayout>
-    <MidGap />
+    <MidGap height="10rpx" />
+    <ItemsContainer
+      :status="status"
+      @on-lower="runPageCollectGood"
+      class="items-container"
+      :itemList="goodList"
+    />
   </view>
 </template>
 
-<style scoped lang="scss">
-// .product-collect-container {
-//   height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-//   overflow: hidden;
-//   .content {
-//     flex: 1;
-//     overflow: hidden;
-//   }
-// }
-</style>
+<style scoped lang="scss"></style>
